@@ -5,6 +5,21 @@ This repository contains both software and electrical components for building a 
 
 This is a test change.
 
+# Documentation
+
+```shell
+cd docs
+```
+
+```shell
+pip install -r requirements.txt
+```
+
+```shell
+make clean
+make html
+```
+
 Libraries needed
 * RF24
 * LIQUID_CRYSTAL_I2C
