@@ -1,11 +1,34 @@
 # NRF24-MultiWii-Drone
+
 This repository contains both software and electrical components for building a drone using the NRF24L01 radio modules and Arduino.
+
+![Prototype One](docs/assets/prototype_1_drone.jpg)
 
 # Changelog
 
-This is a test change.
+* Jun 08, 2025 [v1.0]: Prototype 1.0 [Fail] - More details for this initial prototype in the documentation.
+
+# Schematics and Diagrams
+
+The following schematic diagram shows the wiring components and hardware for the drone.
+
+![Drone Schematic](docs/assets/schematic_drone.png)
+
+The following schematic diagram shows the wiring components and hardware for the drone controller. 
+
+![Controller Schematic](docs/assets/schematic_controller.png)
+
+The following blueprint shows the materials needed to build the frame for the drone. The PDF version of this blueprint can be found and printed under `docs/assets/carbon-fiber-blueprint-drone-frame.pdf`.
+
+![Drone Frame Blurprint](docs/assets/carbon-fiber-blueprint-drone-frame.png)
+
+The tutorial for building and assembling the drone can be found under `\docs`.
 
 # Documentation
+
+The documentation that provides more details and tutorials on building the drone can be found under `\docs`. 
+
+To generate the documentation using `sphinx`, follow the tutorial below with the command line. 
 
 ```shell
 cd docs
@@ -19,11 +42,6 @@ pip install -r requirements.txt
 make clean
 make html
 ```
-
-Libraries needed
-* RF24
-* LIQUID_CRYSTAL_I2C
-* TimerFreeTone_v1.5
 
 # Credits
 

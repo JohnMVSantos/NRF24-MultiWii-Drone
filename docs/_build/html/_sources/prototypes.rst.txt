@@ -12,8 +12,7 @@ Protoype One
    :align: center
    :alt: Prototype One.
 
-
-The first protoype is the initial attempt at building the NRF24-MultiWii-Drone. However, there were weaknesses in the design that led to failure. 
+The first protoype is the initial attempt at building the designed drone. However, there were weaknesses in the design that led to failure. 
 
 The main issues are listed below:
 
@@ -25,4 +24,3 @@ The main issues are listed below:
 
 4. Poor Solder Connections
 
-5. Need soldered controller with enclosure
