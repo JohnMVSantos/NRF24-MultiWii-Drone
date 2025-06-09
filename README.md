@@ -43,6 +43,16 @@ make clean
 make html
 ```
 
+```shell
+sudo apt-get install latexmk
+sudo apt-get install texlive-fonts-recommended
+sudo apt-get install texlive-latex-extra
+```
+
+```shell
+make latexpdf
+```
+
 # Credits
 
 Original drone software is credited to [iforce2d](https://www.youtube.com/@iforce2d).
