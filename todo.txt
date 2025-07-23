@@ -1,5 +1,6 @@
 TODO:
 
+0) Update code based on removal of LCD in the controller.
 1) Complete ReadME sections also changelog? Add pictures of the design.
 2) Sphinx documentation of the drone tutorial with steps also inlcude frame design with mounting holes.
 3) Final sphinx documentation converted into a PDF.

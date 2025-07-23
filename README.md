@@ -7,6 +7,7 @@ This repository contains both software and electrical components for building a 
 # Changelog
 
 * Jun 08, 2025 [v1.0]: Prototype 1.0 [Fail] - More details for this initial prototype in the documentation.
+* Jul 22, 2025 [v1.1]: Prototype 1.1 [Fail] - More details for this second prototype in the documentation.
 
 # Schematics and Diagrams
 
