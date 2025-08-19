@@ -68,3 +68,39 @@ and assess the failures of this prototype and make more revisions to resolve the
 
 In this stage I have ordered replacements for the damaged components such as the Arduino Nano, Arduino Pro Mini, NRF24L01 radio modules, and the controller battery.
 I have planned to recreate the design with the revisions and name it as "prototype 1.2" for a better outcome as the previous design.
+
+Log Entry: August 18, 2025
+---------------------------
+
+This log will provide details to the outcome of prototype 1.2 and the revisions needed to be made for the design. After implementing this prototype, the behaviour of the drone
+was quite erratic. The drone kept resetting when throttle is decreased near zero. It seems to keep resetting and attempts to recalibrate the IMU. The motor responses were rare and seldom spins. When the motor does respond, it 
+responds in bursts and then the drone resets. Looking at the MultiSim outputs, the AUX1 and AUX2 were correctly translated including the joystick movements for roll, pitch, yaw, and throttle levels. So I don't think the issue
+has to do with the controller, rather with the drone itself. 
+
+I suspect possible issues with the drone circuit listed below.
+
+1. The battery discharge rate is too low (25C) and that a proper drone battery with a higher discharge rate (30C or higher) is needed.
+2. The power for the radio is not consistent and requires a 10uF filtering capacitor at the NRF24 power inputs. 
+3. The power for the Arduino Pro Mini is not consistent and requires a 100uF filtering capacitor. 
+4. The power lines has a large AWG (small thickness) where the current cannot be supplied properly.
+5. Motor PWM signals could be too weak to drive the motors. 
+6. Potential EMF noise or leaks is affecting the IMU readings? 
+
+Looking for a battery replacement greater than 25C was quite a challenge as most of the batteries I found were 25C or lower. It was recommended to use "Turnigy Nano-Tech" batteries,
+but these were always not available and kept being out of stock due to their high demand for the high performance. Although I did manage to find a 30C LiPO battery, not from Turnigy, but from AMZZN, it still didn't
+resolve the main issue. The drone behaved a bit better, but most of the resetting issue persisted. 
+
+I moved forward by adding filtering capacitors at the radio module and Arduino Pro Mini power inputs, but this did not resolve the issue. I also ensured the solder for the power connections and the 
+radio connections were solid and well connected, but this also did not resolve the issue. I even created a new motor driver with new MOSFETs and diodes, but this still did not resolve the issue. 
+
+I then suspected, it has to do with the software and that the PWM signals were too weak to drive the motors. Unfortunately, I do not have an oscilloscope to measure the PWM signals properly, but I found the factor in the MultiWii software
+that tunes the PWM outputs. Following the tutorial by Max Imaginations, the variable should be `float adjustmentFactor = 0.255` in line 1069 of output.cpp. I set this value to 0.255 from the default of 1, but this did not resolve the issue.
+As a future work, it seems that it will be best to purchase an oscilloscope to confirm this suspicion. 
+
+Moving forward, I retraced my steps and assessed the instructions for properly arming the drone using MultiSim. First the AUX1 and AUX2 should be set high for arming the drone and the beeper respectively. Once set, the drone accelerometer should
+be calibrated and the read and write to save the changes. To arm and calibrate the drone, the AUX1 should be set low and the throttle and pitch controls are set to zero until the calibration noises are in effect. Once in effect, wait atleast 3 seconds
+to apply the calibrations. With these steps, the drone still didn't manage to respond. 
+
+My next suspicion is the hardware itself. I purchased the Arduino Pro Mini from "Hutomwua" which did not work, I intend to purchase the Arduino Pro Mini from "Robojax" which worked in the previous prototype (v1.1) where the motors actually responded. 
+I have purchased the same Arduino Pro Mini and will try again in the next version. Furthermore, I will confirm the specifications for the MOSFETs, diodes, and resistors are properly rated for the circuit and the power requirements. More details of this assessment under the `prototypes section`.
+I have planned to recreate the design with the revisions and name it as “prototype 1.3” for a better outcome as the previous design.

@@ -62,7 +62,7 @@ Protoype 1.1
 
 |
 
-The second protoype is the second attempt at building the NRF24-MultiWii-Drone. However, there were still weaknesses in the design that led to failure. 
+The protoype 1.1 is the second attempt at building the NRF24-MultiWii-Drone. However, there were still weaknesses in the design that led to failure. 
 
 **The main issues are listed below:**
 
@@ -86,3 +86,38 @@ The second protoype is the second attempt at building the NRF24-MultiWii-Drone. 
 2. Arduino Nano 
 3. Radio Modules NRF24L01 + PA + LNA
 4. 3.7V 600mAH batteries (2x)
+
+Prototype 1.2
+-------------
+
+.. image:: assets/prototype_1.2.jpg
+   :width: 300px
+   :align: center
+   :alt: Prototype One.
+
+|
+
+The prototype 1.2 is the third attempt at building the NRF24-MultiWii-Drone. This prototype addresses the issues found in the previous prototypes and introduces new design elements.
+The primary issue in this prototype is that the motors do not respond despire the joystick movements being correctly translated in MulitSim. The drone keeps resetting and attempts to calibrate. 
+
+**The possible issues are listed below:**
+
+1. The battery discharge rate is too low (25C) and that a proper drone battery with a higher discharge rate (30C or higher) is needed.
+    - Recommended to use "Turnigy Nano-Tech" batteries or similar for their high performance.
+2. The power for the radio is not consistent and requires a 10uF filtering capacitor at the NRF24 power inputs. 
+3. The power for the Arduino Pro Mini is not consistent and requires a 100uF filtering capacitor. 
+    - Confirm Arduino Pro Mini 3.3V 8MHz, or 5V 16MHz is required. 
+    - Research shows that Arduino Pro Mini 5V 16MHz is recommended to be compatible with MultiSim. 
+4. The power lines has a large AWG (small thickness) where the current cannot be supplied properly.
+    - Recommended to use solder with lead and keep solder enclosed after use to avoid contamination/oxidation.
+    - For the motor driver, ensure the proper components are rated for this circuit. These components are being used but requires confirmation.
+    - 0603 10K SMD resistor 103, SI2300DS-T1-GE3CT-ND N-Channel Mosfet 30V 3.6A, IN4148 diode surface mount. 
+5. Motor PWM signals could be too weak to drive the motors. 
+    - Requires oscilloscope to confirm suspicion.
+    - This factor can be set in the MultiWii software, `float adjustmentFactor` on line 1069 of output.cpp.
+6. Potential EMF noise or leaks is affecting the IMU readings? 
+7. The Arduino Pro Mini is faulty which was purchased from "Hutomwua". The previous prototypes was working which was purchased from "Robojax".
+
+**Additional materials and replacement needed for the next prototype:**
+
+1. Arduino Pro Mini Atmega 328P 5V/16MHz (un-soldered) from Robojax specifically. 
