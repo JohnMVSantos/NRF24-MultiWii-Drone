@@ -12,7 +12,7 @@ Protoype 1
 .. image:: assets/prototype_1.jpg
    :width: 300px
    :align: center
-   :alt: Prototype One.
+   :alt: Prototype 1
 
 |
 
@@ -58,7 +58,7 @@ Protoype 1.1
 .. image:: assets/prototype_1.1.jpg
    :width: 300px
    :align: center
-   :alt: Prototype One.
+   :alt: Prototype 1.1
 
 |
 
@@ -93,7 +93,7 @@ Prototype 1.2
 .. image:: assets/prototype_1.2.jpg
    :width: 300px
    :align: center
-   :alt: Prototype One.
+   :alt: Prototype 1.2
 
 |
 
@@ -121,3 +121,32 @@ The primary issue in this prototype is that the motors do not respond despire th
 **Additional materials and replacement needed for the next prototype:**
 
 1. Arduino Pro Mini Atmega 328P 5V/16MHz (un-soldered) from Robojax specifically. 
+
+Prototype 1.3
+-------------
+
+.. image:: assets/prototype_1.3.jpg
+   :width: 300px
+   :align: center
+   :alt: Prototype 1.3
+
+|
+
+The prototype 1.3 is the fourth attempt at building the NRF24-MultiWii-Drone. This prototype was successful in motor response from the controller movements. 
+However, there were still issues where the drone movements were erratic and unstable. There is enough motor throttle to lift the drone, but the drone was unable to
+properly lift due to instability and lack of motor synchronization.
+
+**The possible issues are listed below**
+
+1. The drone is not calibrated properly.
+    - The drone needs to sit on a flat surface for a proper calibration.
+    - The accelerometer and the gyroscope needs proper calibration.
+    - Adjust settings in MultiWii configuration with max smoothness.
+2. Motor direction is wrong.
+    - This can be verified by feeling if the air is being pushed upwards.
+    - Record slow motion video to see the direction of the motors.
+3. The motor RPMs are not the same and unsynchronized.
+4. The forward direction of the MPU6050 is in the opposite direction. 
+    - Rewire orientation of the motors to have face the MPU6050 in its forward direction.
+5. The drone is still too heavy and certain weights of the components are not balanced causing the center of gravity to be offset.
+    - Remove heavy motor mounts and just rely on superglue to attach the motors.

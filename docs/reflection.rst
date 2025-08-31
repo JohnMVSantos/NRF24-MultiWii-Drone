@@ -104,3 +104,27 @@ to apply the calibrations. With these steps, the drone still didn't manage to re
 My next suspicion is the hardware itself. I purchased the Arduino Pro Mini from "Hutomwua" which did not work, I intend to purchase the Arduino Pro Mini from "Robojax" which worked in the previous prototype (v1.1) where the motors actually responded. 
 I have purchased the same Arduino Pro Mini and will try again in the next version. Furthermore, I will confirm the specifications for the MOSFETs, diodes, and resistors are properly rated for the circuit and the power requirements. More details of this assessment under the `prototypes section`.
 I have planned to recreate the design with the revisions and name it as “prototype 1.3” for a better outcome as the previous design.
+
+Log Entry: August 31, 2025
+---------------------------
+
+This log will describe the details to the outcome of prototype 1.3 and the revisions made to the design. Based on the last suspicion that the hardware purchase for the Arduino Pro Mini
+was the source of the issue, this suspicion turned out to be true. Looking at the Arduino Pro Mini purchased from "Hutomwua", the board frequency was only 10MHz. This did not meet specifications 
+for a 5V 16MHz board. I repurchased the Arduino Pro Mini from "Robojax" which was 5V 16MHz and this resolved the issue. The drone was able to respond to the controller's joystick movements.
+
+However, the design is still not perfect as further issues continued. Although the motors responds to the joystick movements, the drone behaves erratically unable to make a proper liftoff.
+
+The possible issues are listed below.
+
+1. The drone is not calibrated properly.
+    - The drone needs to sit on a flat surface for a proper calibration.
+    - The accelerometer and the gyroscope needs proper calibration.
+    - Adjust settings in MultiWii configuration with max smoothness.
+2. Motor direction is wrong.
+    - This can be verified by feeling if the air is being pushed upwards.
+    - Record slow motion video to see the direction of the motors.
+3. The motor RPMs are not the same and unsynchronized.
+4. The forward direction of the MPU6050 is in the opposite direction. 
+    - Rewire orientation of the motors to have face the MPU6050 in its forward direction.
+5. The drone is still too heavy and certain weights of the components are not balanced causing the center of gravity to be offset.
+    - Remove heavy motor mounts and just rely on superglue to attach the motors.

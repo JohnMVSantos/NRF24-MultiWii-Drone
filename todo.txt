@@ -1,7 +1,5 @@
 TODO:
 
-0) Update code based on removal of LCD in the controller. Update schematics.
-1) Complete ReadME sections also changelog? Add pictures of the design.
 2) Sphinx documentation of the drone tutorial with steps also inlcude frame design with mounting holes.
 3) Final sphinx documentation converted into a PDF.
 4) Add future section for future updates to the drone. 
@@ -10,3 +8,16 @@ v1.0 -> prototype 1.0: Initial attempt
 v1.1 -> prototype 1.1: design changes to fix the issues - make it fly
 v2.0 -> prototype 2.0: Incorporatte FPV camera - make it see
 v3.0 -> prototype 3.0: Add AI detections. 
+
+Key learnings
+--------------
+Battery 25C works for this drone
+Better to use solder with lead, but prone to contamination (ensure proper storage)
+Check NRF24 radio communication first before assembling the drone. Always test parts individually.
+Keep it simple and complexity should not come first. Achieve minimum functionality for initial development
+5V 16MHz Arduino Pro Mini is sufficient and better to buy from Robojax
+Better to buy MPU6050 from DFRobot
+Better to place MPU6050 away from electrical noise of the Arduino and other electrical components.
+Keep electrical components away from the conductive carbon fiber frame and insulate properly.
+Thin kapton tapes do not provide as much insulation as actual electrical tape. Though electrical tape is heavier. 
+Capacitors helps reduce power fluctuations and noise.
