@@ -134,6 +134,16 @@ The possible issues are listed below.
 Key Learnings
 --------------
 
+* Battery 25C works for this drone.
+* Better to use solder with lead, but prone to contamination (ensure proper storage).
+* Check NRF24 radio communication first before assembling the drone. Always test parts individually.
+* Keep it simple and complexity should not come first. Achieve minimum functionality for initial developments.
+* 5V 16MHz Arduino Pro Mini is sufficient for the drone.
+* Better to place MPU6050 away from electrical noise of the Arduino and other electrical components.
+* Keep electrical components away from the conductive carbon fiber frame and insulate properly.
+* Thin kapton tapes do not provide as much insulation as actual electrical tape. Though electrical tape is heavier. 
+* Capacitors helps reduce power fluctuations and noise.
+
 These are the lift of successful vendors that sold the components needed for this project that worked. 
 
 - **Robojax**: Arduino Pro Mini 5V 16MHz 
@@ -155,3 +165,4 @@ These are the list of vendors that sold components that did not work or were fau
 - **ELEGOO**: Arduno Nano (Faulty and did not program)
 - **Fytoo**: 3.7V 1000mAH LiON batteries (potentially drew too much current and burned the board?)
 - **Aideepen**: NRF24L01+PA+LNA Transeiver Module (Faulty and did not communicate)
+
