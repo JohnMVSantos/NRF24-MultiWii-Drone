@@ -128,3 +128,30 @@ The possible issues are listed below.
     - Rewire orientation of the motors to have face the MPU6050 in its forward direction.
 5. The drone is still too heavy and certain weights of the components are not balanced causing the center of gravity to be offset.
     - Remove heavy motor mounts and just rely on superglue to attach the motors.
+
+
+
+Key Learnings
+--------------
+
+These are the lift of successful vendors that sold the components needed for this project that worked. 
+
+- **Robojax**: Arduino Pro Mini 5V 16MHz 
+- **HiLetGo**: NRF24L01+PA+LNA Transeiver Module
+- **Aideepen**: NRF24L01 Transeiver Standard Module
+- **Aideepen**: Arduino Nano Board
+- **Fytoo**: 3.7V 600mAH LiON batteries - used for the controller
+- **Fytoo**: 3.7V 220mAH LiON 25C battery
+- **WWZMDiB**: Mini USB to TTL Serial Converter Adapter, 3.3V/5.5 V FTDI Breakout Board for Arduino
+- **Wishiot**: Thumb Joystick Module Dual Axis Sensor for Arduino
+- **DFRobot**: MPU6050 Gyro + Accelerometer Module
+- **Digikey**: Surface mount components (resistors, diodes, n-channel MOSFETs, capacitors, etc)
+- **Midzooparts**: Lilypad Buzzer Small Speaker Module for Arduino
+- **Crazepony**: 4pcs 6x15mm Motor (Speed: Insane) 19000KV, 70000 RPM@3.7V
+
+These are the list of vendors that sold components that did not work or were faulty for this project.
+
+- **Hutomwua**: Arduino Pro Mini 5V 16MHz (Did not meet specifications or seems to be 10MHz on the backside - not advertised)
+- **ELEGOO**: Arduno Nano (Faulty and did not program)
+- **Fytoo**: 3.7V 1000mAH LiON batteries (potentially drew too much current and burned the board?)
+- **Aideepen**: NRF24L01+PA+LNA Transeiver Module (Faulty and did not communicate)
