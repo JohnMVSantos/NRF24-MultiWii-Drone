@@ -23,7 +23,7 @@ The following schematic diagram shows the wiring components and hardware for the
 
 The following cutout shows the parts needed to build the frame for the drone. The PDF version of this blueprint can be found and printed under `docs/assets/carbon-fiber-blueprint-drone-frame.pdf`.
 
-![Drone Frame Blurprint](docs/assets/carbon-fiber-blueprint-drone-frame.png)
+![Drone Frame Blueprint](docs/assets/carbon-fiber-blueprint-drone-frame.png)
 
 The tutorial for building and assembling the drone can be found under `\docs`.
 
