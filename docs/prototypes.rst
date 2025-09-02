@@ -24,7 +24,7 @@ The first protoype is the initial attempt at building the NRF24-MultiWii-Drone. 
     - Motor fasteners that were improvised using drywall anchors were too heavy (Motors will be glued directly in the next prototype).
     - The wires were too thick using 24AWG.
     - The perforated board was too large with lots of unused space.
-    - The soldered pin connectors (NRF24L01, perforated board, buzzer) are too heavy (These will be removed and wires will be soldered directly in the next prototype).
+    - The soldered JST connectors (NRF24L01, perforated board, buzzer) are too heavy (These will be removed and wires will be soldered directly in the next prototype).
     - 1N5819 diodes are too heavy (Using 1N4148 surface mount diodes in the next prototype).
     - Using velcro is too heavy (Use super glue instead).
 
@@ -68,14 +68,14 @@ The protoype 1.1 is the second attempt at building the NRF24-MultiWii-Drone. How
 
 1. Kapton Tape Does not Provide Proper Insulation
     - After adding one layer of kapton tape, it seemed that the electrical components, mainly the IMU shorted and was damaged. This resulted in the gyro unable to properly register the movements in MultiSim. The next prototype will include a proper enclosure for the electrical components of the drone. Although the main frame will still be carbon fiber, a separate box enclsoure will be used to cover the electrical components properly using light materials. 
-    - Furthermore, investigating the user of hot glue for proper insulation. However, initial research suggests this may lead to further design failures.
+    - Furthermore, investigating the use of hot glue for proper insulation. However, initial research suggests this may lead to further design failures.
 
 2. Controller is Too Complex
     - "Simplicity is the ultimate sophistication." - Leonardo da Vinci 
-    - Unnessary components in the controller atleast for the MVP such as the 16x2 LCD to track voltage and the potentiometer should be removed. The controller should be simplified to only include the basic components for communicating with the drone and this includes the Arduino Nano controller, the radio module + PA + LNA components, the two joysticks, the two SPDT switches, and the SPST switch with the 3.7V batteries. 
+    - Unnessary components in the controller atleast for the MVP such as the 16x2 LCD to track voltage and the potentiometer should be removed. The controller should be simplified to only include the basic components needed for communicating with the drone and this includes the Arduino Nano controller, the radio module + PA + LNA components, the two joysticks, the two SPDT switches, and the SPST switch with the 3.7V batteries. 
 
 3. Controller Battery Has Too Much Current
-    - Prolonged use of the controller lead to overheating of the components and controller failure. Theory is that the battery packs too much current which the components could not handle resulting in breakdown. The two batteries are connected in parallel which are 3.7V 1000mAH. Looking into the use of 3.7V and 600mAH batteries instead. 
+    - Prolonged use of the controller lead to overheating of the components and controller failure. Theory is that the battery packs too much current which the components could not handle resulting in breakdown. The two batteries are connected in series are 3.7V 1000mAH. Looking into the use of 3.7V and 600mAH batteries instead. 
 
 4. Remove the Grounded Copper Sheet
     - This may not be needed as I have not encountered any issues with the drone resetting. This solution was suggested online, but I should not implement solutions to problems that does not exist in my design.
@@ -98,7 +98,7 @@ Prototype 1.2
 |
 
 The prototype 1.2 is the third attempt at building the NRF24-MultiWii-Drone. This prototype addresses the issues found in the previous prototypes and introduces new design elements.
-The primary issue in this prototype is that the motors do not respond despire the joystick movements being correctly translated in MulitSim. The drone keeps resetting and attempts to calibrate. 
+The primary issue in this prototype is that the motors do not respond despite the joystick movements being translated in MulitSim. The drone keeps resetting and attempts to calibrate. 
 
 **The possible issues are listed below:**
 
@@ -110,8 +110,8 @@ The primary issue in this prototype is that the motors do not respond despire th
     - Research shows that Arduino Pro Mini 5V 16MHz is recommended to be compatible with MultiSim. 
 4. The power lines has a large AWG (small thickness) where the current cannot be supplied properly.
     - Recommended to use solder with lead and keep solder enclosed after use to avoid contamination/oxidation.
-    - For the motor driver, ensure the proper components are rated for this circuit. These components are being used but requires confirmation.
-    - 0603 10K SMD resistor 103, SI2300DS-T1-GE3CT-ND N-Channel Mosfet 30V 3.6A, IN4148 diode surface mount. 
+    - For the motor driver, ensure the proper components are rated for this circuit. 
+    - These components are being used but requires confirmation; 0603 10K SMD resistor 103, SI2300DS-T1-GE3CT-ND N-Channel Mosfet 30V 3.6A, 1N4148 diode surface mount. 
 5. Motor PWM signals could be too weak to drive the motors. 
     - Requires oscilloscope to confirm suspicion.
     - This factor can be set in the MultiWii software, `float adjustmentFactor` on line 1069 of output.cpp.

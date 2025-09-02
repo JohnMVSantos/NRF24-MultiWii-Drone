@@ -7,7 +7,7 @@ This repository contains both software and electrical components for building a 
 # Changelog
 
 * Jun 08, 2025 [v1.0]: Prototype 1.0 [Fail] - Zero communication between controller and the drone.
-* Jul 22, 2025 [v1.1]: Prototype 1.1 [Fail] - Circuit shorted with carbon fiber frame. 
+* Jul 22, 2025 [v1.1]: Prototype 1.1 [Fail] - Drone short circuited with carbon fiber frame. 
 * Aug 18, 2025 [v1.2]: Prototype 1.2 [Fail] - Drone keeps resetting.
 * Aug 31, 2025 [v1.3]: [Prototype 1.3](https://youtu.be/l2KEjdwurtw?si=Yr7yQo37yw-8ZKtF) [Fail] - Drone does not lift off, motors out of sync. 
 
@@ -21,7 +21,7 @@ The following schematic diagram shows the wiring components and hardware for the
 
 ![Controller Schematic](docs/assets/schematic_controller.png)
 
-The following blueprint shows the materials needed to build the frame for the drone. The PDF version of this blueprint can be found and printed under `docs/assets/carbon-fiber-blueprint-drone-frame.pdf`.
+The following cutout shows the parts needed to build the frame for the drone. The PDF version of this blueprint can be found and printed under `docs/assets/carbon-fiber-blueprint-drone-frame.pdf`.
 
 ![Drone Frame Blurprint](docs/assets/carbon-fiber-blueprint-drone-frame.png)
 
