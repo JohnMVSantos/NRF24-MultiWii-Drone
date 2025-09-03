@@ -70,4 +70,3 @@ Original drone software is credited to [iforce2d](https://www.youtube.com/@iforc
 ## Drone Tutorial - ElectroNoobs
 
 [![Watch the video](https://img.youtube.com/vi/J0x4ChjUS00/0.jpg)](https://www.youtube.com/watch?v=J0x4ChjUS00&t=719s)
-
