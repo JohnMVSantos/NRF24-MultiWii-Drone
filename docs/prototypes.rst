@@ -150,3 +150,45 @@ properly lift due to instability and lack of motor synchronization.
     - Rewire orientation of the motors to have face the MPU6050 in its forward direction.
 5. The drone is still too heavy and certain weights of the components are not balanced causing the center of gravity to be offset.
     - Remove heavy motor mounts and just rely on superglue to attach the motors.
+6. The arms of the drone are limble which causes wobbling during flight.
+    - Reinforce the arms with a stronger material that doesn't bend such as popsicle sticks.
+
+Prototype 1.4
+-------------
+
+.. image:: assets/prototype_1.4.jpg
+   :width: 300px
+   :align: center
+   :alt: Prototype 1.4
+
+|
+
+The prototype 1.4 is the fifth attempt at building the NRF24-MultiWii-Drone. This prototype still could not fly despite the design changes 
+to the frame. The motor direction has been corrected; top left => clockwwise, top right => counter-clockwise, bottom left => counter-clockwise, bottom right => clockwise.
+The drone motors are now super glued onto the arms and the arms have been converted into popsicle sticks which does not bend easily. Furthermore, the drone has been made smaller,
+though it did decrease the overall surface area of the drone, much of the weight has been reduced. Lastly, an EMF blocking shield made of copper has been
+attached in the underside of the Arduino Pro Mini to reduce possible interference with the motor controller. PID tuning has also been explored and adjusted,
+but still could not find the right values for a stable flight.
+
+**The possible issues are listed below**
+
+1. IMU wobbles, unsecure mount.
+2. Frame is yet still too heavy.
+3. Smaller propellers + arm surface area - more unstable.
+4. Battery is mounted at the bottom which makes it hard to connect.
+5. Wrong drone output behaviour from the joystick movements - needs software correction.
+6. Needs PID tuning for the roll, pitch, and yaw.
+
+The current configurations with the expected behaviour and the actual behaviour are noted below.
+
+.. image:: assets/p1.4_configuration.jpg
+   :width: 300px
+   :align: center
+   :alt: Prototype 1.4 Configuration
+
+**Design changes for the next prototype**
+
+1. Software correction to the motor behaviour.
+2. Configure joystick values for correct controller calibration.
+3. Lighter frame, longer arms, secure mounts.
+4. Proper PID tuning for the drone's roll, pitch, and yaw.

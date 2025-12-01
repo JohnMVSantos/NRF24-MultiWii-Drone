@@ -2,7 +2,7 @@
 
 This repository contains both software and electrical components for building a drone using the NRF24L01 radio modules and Arduino.
 
-![Prototype One](docs/assets/prototype_1.3.jpg)
+![Prototype One](docs/assets/prototype_1.4.jpg)
 
 # Changelog
 
@@ -10,6 +10,7 @@ This repository contains both software and electrical components for building a 
 * Jul 22, 2025 [v1.1]: Prototype 1.1 [Fail] - Drone short circuited with carbon fiber frame. 
 * Aug 18, 2025 [v1.2]: Prototype 1.2 [Fail] - Drone keeps resetting.
 * Aug 31, 2025 [v1.3]: [Prototype 1.3](https://youtu.be/l2KEjdwurtw?si=Yr7yQo37yw-8ZKtF) [Fail] - Drone does not lift off, motors out of sync. 
+* Nov 30, 2025 [v1.4]: [Prototype 1.4](https://youtu.be/Q8TK0ZtKbdI?si=oR4hcLkOsZyx9zIT) [Fail] - Drone does not lift, too heavy, joystick movements does not match MultiWii simulation and drone output behaviour.
 
 # Schematics and Diagrams
 

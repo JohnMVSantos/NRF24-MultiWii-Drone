@@ -6,6 +6,8 @@ TODO:
 5) Proper formatting of the PDF docs.
 
 v1.0 -> prototype 1.0: Initial attempt
-v1.1 -> prototype 1.1: design changes to fix the issues - make it fly
-v2.0 -> prototype 2.0: Incorporatte FPV camera - make it see
-v3.0 -> prototype 3.0: Add AI detections. 
+v1.5 -> prototype 1.5: design changes to fix the issues - make it fly
+v2.0 -> Custom PCB Gerber + custom frame
+v3.0 -> Incorporatte FPV camera - make it see
+v4.0 -> Custom FPV GUI with IMU readings (Can a single transmitter have two recievers (Controller + GUI)? )
+v5.0 -> Add AI detections and features

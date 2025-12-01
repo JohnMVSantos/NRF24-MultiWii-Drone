@@ -128,11 +128,47 @@ The possible issues are listed below.
     - Rewire orientation of the motors to have face the MPU6050 in its forward direction.
 5. The drone is still too heavy and certain weights of the components are not balanced causing the center of gravity to be offset.
     - Remove heavy motor mounts and just rely on superglue to attach the motors.
+6. The arms of the drone are limble which causes wobbling during flight.
+    - Reinforce the arms with a stronger material that doesn't bend such as popsicle sticks.
 
 More details of this assessment under the :ref:`Prototypes section <prototypes>`. I have planned to recreate the design and name it as “Prototype 1.4” with the fixes needed for the current design.
 
-Key Learnings
---------------
+Log Entry: November 30, 2025
+-----------------------------
+
+This log will describe the details to the outcome of Prototype 1.4 and the revisions made to the design. In this prototype, the drone was accelerometer was calibrated 
+and an EMF copper blocking shield was installed to prevent interference from the motor controller to the Arduino Pro Mini. Furthermore, the motor direction was verified
+where the top left motor spins clockwise, top right motor spins counter-clockwise, bottom left motor spins counter-clockwise, and the bottom right motor spins clockwise. 
+The bottom right propeller was wrong preventing the air from being pushed downward. Furthermore for stability reasons, the arms were replaced with popsicle sticks
+to prevent any bending or oscillations, the motors were also superglued to the arms. 
+
+Although the design is still not perfect as further issues continued. The possible issues are listed below.
+
+1. IMU wobbles, unsecure mount.
+2. Frame is yet still too heavy.
+3. Smaller propellers + arm surface area - more unstable.
+4. Battery is mounted at the bottom which makes it hard to connect.
+5. Wrong drone output behaviour from the joystick movements - needs software correction.
+6. Needs PID tuning for the roll, pitch, and yaw.
+
+New Frame Requires:
+- Lighter, thinner frame.
+- Thick arms with more propeller surface area.
+- Battery mounted on top for easier connection and center of gravity adjustment.
+- Superglued motors and soldered connections.
+- Reduce weight as much as possible.
+
+The current configurations with the expected behaviour and the actual behaviour are noted below.
+
+.. image:: assets/p1.4_configuration.jpg
+   :width: 300px
+   :align: center
+   :alt: Prototype 1.4 Configuration
+
+More details of this assessment under the :ref:`Prototypes section <prototypes>`. I have planned to recreate the design and name it as “Prototype 1.5” with the fixes needed for the current design.
+
+Key Learnings v1.0-1.3
+-----------------------
 
 * Battery 25C works for this drone.
 * Better to use solder with lead, but prone to contamination (ensure proper storage).
@@ -166,3 +202,11 @@ These are the list of vendors that sold components that did not work or were fau
 - **Fytoo**: 3.7V 1000mAH LiON batteries (potentially drew too much current and burned the board?)
 - **Aideepen**: NRF24L01+PA+LNA Transeiver Module (Faulty and did not communicate)
 
+Key Learnings v1.4+
+--------------------
+
+* Copper EMF blocking shield helps reduce noise interference to the IMU.
+* The IMU needs to be sitting flat and secured properly to prevent wobbling.
+* Thicker drone arms that doesn't bend is better for stability. The overall surface area of the arms and propeller should be maximized.
+* The frame needs to be as light as possible.
+* The battery should be mounted on top for easier connection and allow adjustment for the center of gravity.
