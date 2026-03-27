@@ -78,13 +78,13 @@ has to do with the controller, rather with the drone itself.
 
 I suspect possible issues with the drone circuit listed below.
 
-1. The battery discharge rate is too low (25C) and that a proper drone battery with a higher discharge rate (30C or higher) is needed.
-2. The power for the radio is not consistent and requires a 10uF filtering capacitor at the NRF24 power inputs. 
-3. The power for the Arduino Pro Mini is not consistent and requires a 100uF filtering capacitor. 
-4. The power lines has a large AWG (small thickness) where the current cannot be supplied properly.
-5. Motor PWM signals could be too weak to drive the motors. 
+1. The battery discharge rate is too low (25C) and that a proper drone battery with a higher discharge rate (30C or higher) is needed
+2. The power for the radio is not consistent and requires a 10uF filtering capacitor at the NRF24 power inputs
+3. The power for the Arduino Pro Mini is not consistent and requires a 100uF filtering capacitor
+4. The power lines has a large AWG (small thickness) where the current cannot be supplied properly
+5. Motor PWM signals could be too weak to drive the motors
 6. Potential EMF noise or leaks is affecting the IMU readings? 
-7. The Arduino Pro Mini is faulty which was purchased from "Hutomwua". The previous prototypes was working which was purchased from "Robojax".
+7. The Arduino Pro Mini is faulty which was purchased from "Hutomwua". The previous prototypes was working which was purchased from "Robojax"
 
 Looking for a battery replacement greater than 25C was quite a challenge as most of the batteries I found were 25C or lower. It was recommended to use "Turnigy Nano-Tech" batteries for their high performance,
 but these were always not available and kept being out of stock due to their high demand. Although I did manage to find a 30C LiPO battery, not from Turnigy, but from AMZZN, it still didn't
@@ -116,20 +116,20 @@ However, the design is still not perfect as further issues continued. Although t
 
 The possible issues are listed below.
 
-1. The drone is not calibrated properly.
-    - The drone needs to sit on a flat surface for a proper calibration.
-    - The accelerometer and the gyroscope needs proper calibration.
-    - Adjust settings in MultiWii configuration with max smoothness.
-2. Motor direction is wrong.
-    - This can be verified by feeling if the air is being pushed upwards.
-    - Record slow motion video to see the direction of the motors.
-3. The motor RPMs are not the same and unsynchronized.
-4. The forward direction of the MPU6050 is in the opposite direction. 
-    - Rewire orientation of the motors to have face the MPU6050 in its forward direction.
-5. The drone is still too heavy and certain weights of the components are not balanced causing the center of gravity to be offset.
-    - Remove heavy motor mounts and just rely on superglue to attach the motors.
-6. The arms of the drone are limble which causes wobbling during flight.
-    - Reinforce the arms with a stronger material that doesn't bend such as popsicle sticks.
+1. The drone is not calibrated properly
+    - The drone needs to sit on a flat surface for a proper calibration
+    - The accelerometer and the gyroscope needs proper calibration
+    - Adjust settings in MultiWii configuration with max smoothness
+2. Motor direction is wrong
+    - This can be verified by feeling if the air is being pushed upwards
+    - Record slow motion video to see the direction of the motors
+3. The motor RPMs are not the same and unsynchronized
+4. The forward direction of the MPU6050 is in the opposite direction
+    - Rewire orientation of the motors to have face the MPU6050 in its forward direction
+5. The drone is still too heavy and certain weights of the components are not balanced causing the center of gravity to be offset
+    - Remove heavy motor mounts and just rely on superglue to attach the motors
+6. The arms of the drone are limble which causes wobbling during flight
+    - Reinforce the arms with a stronger material that doesn't bend such as popsicle sticks
 
 More details of this assessment under the :ref:`Prototypes section <prototypes>`. I have planned to recreate the design and name it as “Prototype 1.4” with the fixes needed for the current design.
 
@@ -144,21 +144,21 @@ to prevent any bending or oscillations, the motors were also superglued to the a
 
 Although the design is still not perfect as further issues continued. The possible issues are listed below.
 
-1. IMU wobbles, unsecure mount.
-2. Frame is yet still too heavy.
-3. Smaller propellers + arm surface area - more unstable.
-4. Battery is mounted at the bottom which makes it hard to connect.
-5. Wrong drone output behaviour from the joystick movements - needs software correction.
-6. Needs PID tuning for the roll, pitch, and yaw.
+1. IMU wobbles, unsecure mount
+2. Frame is yet still too heavy
+3. Smaller propellers + arm surface area - more unstable
+4. Battery is mounted at the bottom which makes it hard to connect
+5. Wrong drone output behaviour from the joystick movements - needs software correction
+6. Needs PID tuning for the roll, pitch, and yaw
 
 New Frame Requires:
-- Lighter, thinner frame.
-- Thick arms with more propeller surface area.
-- Battery mounted on top for easier connection and center of gravity adjustment.
-- Superglued motors and soldered connections.
-- Reduce weight as much as possible.
+- Lighter, thinner frame
+- Thick arms with more propeller surface area
+- Battery mounted on top for easier connection and center of gravity adjustment
+- Superglued motors and soldered connections
+- Reduce weight as much as possible
 
-The current configurations with the expected behaviour and the actual behaviour are noted below.
+The current configurations with the expected behaviour and the actual behaviour are noted below
 
 .. image:: assets/p1.4_configuration.jpg
    :width: 300px
@@ -167,19 +167,52 @@ The current configurations with the expected behaviour and the actual behaviour 
 
 More details of this assessment under the :ref:`Prototypes section <prototypes>`. I have planned to recreate the design and name it as “Prototype 1.5” with the fixes needed for the current design.
 
-Key Learnings v1.0-1.3
+Log Entry: January 31, 2026
+----------------------------
+
+
+Log Entry: March 28, 2026
+----------------------------
+
+
+Key Learnings/Takeaways
 -----------------------
 
-* Battery 25C works for this drone.
-* Better to use solder with lead, but prone to contamination (ensure proper storage).
-* Check NRF24 radio communication first before assembling the drone. Always test parts individually.
-* Keep it simple and complexity should not come first. Achieve minimum functionality for initial developments.
-* 5V 16MHz Arduino Pro Mini is sufficient for the drone.
-* Better to place MPU6050 away from electrical noise of the Arduino and other electrical components.
-* Keep electrical components away from the conductive carbon fiber frame and insulate properly.
-* Thin kapton tapes do not provide as much insulation as actual electrical tape. Though electrical tape is heavier. 
-* Capacitors helps reduce power fluctuations and noise.
+Design Considerations:
 
+1. Battery 25C works for this drone
+2. 5V 16MHz Arduino Pro Mini is sufficient for the drone
+3. Copper EMF blocking shield helps reduce the EMF noise generated by the motor driver
+4. Better to place MPU6050 away from electrical noise of the Arduino and other electrical components
+5. The IMU needs to be sitting flat and secured properly to prevent wobbling
+6. Capacitors helps reduce power fluctuations and noise
+7. Position all 4 motors evenly and in the same manner. The start rotation should be consistent
+8. Smaller surface area can cause instability? I think it is better for longer arms and larger propellers to increase the drone surface area
+9. Thicker drone arms that doesn't bend is better for stability. The overall surface area of the arms and propeller should be maximized
+10. The battery should be mounted on top for easier connection and allow adjustment for the center of gravity
+11. Choose your components based on the design specifications. These are the components I have chosen based on the design specifications
+- 10KOhm resistor 0805 (0.125W)   `CRG0805F10K <https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831>`_
+    * Ensures VGS = 0
+- Diode: `SS54FSH <https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/SS54FSH/18718584>`_ (5A, 40V)
+    * Maximum rated current must be greater than 2 * stall current (assuming 2-6A)
+- N- Channel Mosfet: `AO3400A <https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3400A/1855772>`_ or `AO3416 <https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3416/1855783>`_
+    * VDS ~>20-30V is better (rated for high voltage spikes)
+    * RDS ~<10mOhm is better (low power loss)
+    * Gate threshold ~2.5-3.3V (turns on based on battery capacity)
+    * Continuous & Pulsed Current Rating should exceed peak and continuous current draw in drone (5.5A = 25C * 0.22Ah).
+
+Practical Considerations:
+
+1. Check NRF24 radio communication first before assembling the drone. Always test parts individually
+2. Keep it simple and complexity should not come first. Achieve minimum functionality for initial developments
+3. Keep electrical components away from the conductive carbon fiber frame (if using carbon fiber) and insulate properly
+4. Better to use solder with lead, but prone to contamination (ensure proper storage)
+5. Thin kapton tapes do not provide as much insulation as actual electrical tape. Though electrical tape is heavier
+6. Ensure the motor power can carry the total load of the drone
+7. Ensure prototype works before designing a final PCB
+
+Successful Vendors
+------------------
 These are the lift of successful vendors that sold the components needed for this project that worked. 
 
 - **Robojax**: Arduino Pro Mini 5V 16MHz 
@@ -201,12 +234,3 @@ These are the list of vendors that sold components that did not work or were fau
 - **ELEGOO**: Arduno Nano (Faulty and did not program)
 - **Fytoo**: 3.7V 1000mAH LiON batteries (potentially drew too much current and burned the board?)
 - **Aideepen**: NRF24L01+PA+LNA Transeiver Module (Faulty and did not communicate)
-
-Key Learnings v1.4+
---------------------
-
-* Copper EMF blocking shield helps reduce noise interference to the IMU.
-* The IMU needs to be sitting flat and secured properly to prevent wobbling.
-* Thicker drone arms that doesn't bend is better for stability. The overall surface area of the arms and propeller should be maximized.
-* The frame needs to be as light as possible.
-* The battery should be mounted on top for easier connection and allow adjustment for the center of gravity.
