@@ -16,27 +16,27 @@ Protoype 1
 
 |
 
-The first protoype is the initial attempt at building the NRF24-MultiWii-Drone. However, there were weaknesses in the design that led to failure. 
+The first protoype is the initial attempt at building the NRF24-MultiWii-Drone. However, there were issues in the design that led to failure. 
 
 **The main issues are listed below:**
 
 1. Too heavy
-    - Motor fasteners that were improvised using drywall anchors were too heavy (Motors will be glued directly in the next prototype)
+    - Motor fasteners that were improvised using drywall anchors were too heavy (motors will be glued directly in the next prototype)
     - The wires were too thick using 24AWG
     - The perforated board was too large with lots of unused space
-    - The soldered JST connectors (NRF24L01, perforated board, buzzer) are too heavy (These will be removed and wires will be soldered directly in the next prototype)
-    - 1N5819 diodes are too heavy (Using 1N4148 surface mount diodes in the next prototype)
-    - Using velcro is too heavy (Use super glue instead)
+    - The soldered JST connectors (NRF24L01, perforated board, buzzer) are too heavy (these will be removed and wires will be soldered directly in the next prototype)
+    - 1N5819 diodes are too heavy (using 1N4148 surface mount diodes in the next prototype)
+    - Using velcro is too heavy (use super glue instead)
 
 2. Small Propellers/Less Thrust
-    - Using 2 blade (faster) 37mm propellers (Use 4 blade propellers for more thrust)
+    - Using 2 blade (faster) 37mm propellers (use 4 blade propellers for more thrust)
 
 3. Conductive Carbon Fiber Frame
-    - Possible short circuits when mounted on the carbon fiber frame (Use kapton tape for better insulation with the electrical components)
+    - Possible short circuits when mounted on the carbon fiber frame (use kapton tape for better insulation with the electrical components)
 
 4. Poor Solder Connections
     - Damaged solder tips (oxidized) resulted in poor solder connections with possible decrease in conductivity and connectivity between components and possible short circuits
-    - Replace solder tips and properlly resolder the connections in the next prototype
+    - Replace solder tips and properly resolder the connections in the next prototype
 
 5. Need Soldered Controller with Enclosure
     - The controller uses a breadboard with weak connections and unmanaged wiring. Requires a proper enclosure with soldered connections for better reliability
@@ -62,19 +62,19 @@ Protoype 1.1
 
 |
 
-The protoype 1.1 is the second attempt at building the NRF24-MultiWii-Drone. However, there were still weaknesses in the design that led to failure. 
+Protoype 1.1 is the second attempt at building the NRF24-MultiWii-Drone. However, there were still issues in the design that led to failure. 
 
 **The main issues are listed below:**
 
-1. Kapton Tape Does not Provide Proper Insulation
-    - After adding one layer of kapton tape, it seemed that the electrical components, mainly the IMU shorted and was damaged. This resulted in the gyro unable to properly register the movements in MultiSim. The next prototype will include a proper enclosure for the electrical components of the drone. Although the main frame will still be carbon fiber, a separate box enclsoure will be used to cover the electrical components properly using light materials
+1. Kapton Tape did not provide proper insulation
+    - After adding one layer of kapton tape, it seemed that the electrical components, mainly the IMU shorted and was damaged. This resulted in the accelerometer unable to properly register the movements in MultiSim. The next prototype will include a proper enclosure for the electrical components of the drone. Although the main frame will still be carbon fiber, a separate box enclsoure will be used to cover the electrical components properly using light materials
     - Furthermore, investigating the use of hot glue for proper insulation. However, initial research suggests this may lead to further design failures
 
 2. Controller is Too Complex
     - "Simplicity is the ultimate sophistication." - Leonardo da Vinci 
     - Unnessary components in the controller atleast for the MVP such as the 16x2 LCD to track voltage and the potentiometer should be removed. The controller should be simplified to only include the basic components needed for communicating with the drone and this includes the Arduino Nano controller, the radio module + PA + LNA components, the two joysticks, the two SPDT switches, and the SPST switch with the 3.7V batteries
 
-3. Controller Battery Has Too Much Current
+3. Controller Battery has too much current
     - Prolonged use of the controller lead to overheating of the components and controller failure. Theory is that the battery packs too much current which the components could not handle resulting in breakdown. The two batteries are connected in series are 3.7V 1000mAH. Looking into the use of 3.7V and 600mAH batteries instead
 
 4. Remove the Grounded Copper Sheet
@@ -97,7 +97,7 @@ Prototype 1.2
 
 |
 
-The prototype 1.2 is the third attempt at building the NRF24-MultiWii-Drone. This prototype addresses the issues found in the previous prototypes and introduces new design elements.
+Prototype 1.2 is the third attempt at building the NRF24-MultiWii-Drone. This prototype addresses the issues found in the previous prototypes and introduces new design elements.
 The primary issue in this prototype is that the motors do not respond despite the joystick movements being translated in MulitSim. The drone keeps resetting and attempts to calibrate. 
 
 **The possible issues are listed below:**
@@ -132,7 +132,7 @@ Prototype 1.3
 
 |
 
-The prototype 1.3 is the fourth attempt at building the NRF24-MultiWii-Drone. This prototype was successful in motor response from the controller movements. 
+Prototype 1.3 is the fourth attempt at building the NRF24-MultiWii-Drone. This prototype was successful in motor response from the controller movements. 
 However, there were still issues where the drone movements were erratic and unstable. There is enough motor throttle to lift the drone, but the drone was unable to
 properly lift due to instability and lack of motor synchronization.
 
@@ -163,7 +163,7 @@ Prototype 1.4
 
 |
 
-The prototype 1.4 is the fifth attempt at building the NRF24-MultiWii-Drone. This prototype still could not fly despite the design changes 
+Prototype 1.4 is the fifth attempt at building the NRF24-MultiWii-Drone. This prototype still could not fly despite the design changes 
 to the frame. The motor direction has been corrected; top left => clockwwise, top right => counter-clockwise, bottom left => counter-clockwise, bottom right => clockwise.
 The drone motors are now super glued onto the arms and the arms have been converted into popsicle sticks which does not bend easily. Furthermore, the drone has been made smaller,
 though it did decrease the overall surface area of the drone, much of the weight has been reduced. Lastly, an EMF blocking shield made of copper has been
@@ -203,7 +203,7 @@ Prototype 1.5
 
 |
 
-The prototype 1.5 is the sixth attempt at building the NRF24-MultiWii-Drone. This version is still unable to lift off due to major instabilities in 
+Prototype 1.5 is the sixth attempt at building the NRF24-MultiWii-Drone. This version is still unable to lift off due to major instabilities in 
 the flight pattern. For instance, the joystick movements don't seem to match the drone behavior. The drone motors seem to be out of 
 sync (PWM signals need to be looked at closely). Furthermore, the drone does keep resetting from time to time. The drone might need PID tuning 
 and joystick value adjustments.
@@ -214,10 +214,10 @@ and joystick value adjustments.
 2. All power is drawn from the same source connected to the VCC pin of the Arduino Pro Mini
 3. Wire thickness used is 28AWG (from 1.25mm connector sockets) - should be 30AWG+
 4. The incorrect translation from the controller joystick movements to the drone motor behaviour is causing instability
-5. IMU is not sitting flat and unstable. 
+5. IMU is not sitting flat and unstable
 6. Drone motors are not positioned evenly
 7. Frame is still too heavy
-8. Small surface area drone causing instability.
+8. Small surface area drone causing instability
 
 **Design changes for the next prototype**
 
@@ -236,7 +236,7 @@ Prototype 2.0
 
 |
 
-The prototype 2.0 is the seventh and last attempt at building the NRF24-MultiWii-Drone. This prototype is based on a PCB design using EasyEDA and manufactured by JLCPCB. 
+Prototype 2.0 is the seventh and last attempt at building the NRF24-MultiWii-Drone. This prototype is based on a PCB design using EasyEDA and manufactured by JLCPCB. 
 The PCB is designed to be its own frame and has the components soldered directly onto the board. There were component changes to the motor driver based on the following characteristics:
 
 - 10KOhm resistor 0805 (0.125W)   `CRG0805F10K <https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831>`_
@@ -260,5 +260,5 @@ The previous components had the following limitations:
 - S12300 n-mosfet - Used: SI2300DS-T1-GE3CT-ND
 
 Despite the component changes and the PCB design, the drone still could not lift off and behaves even more poorly. At certain times the current drawn from the back right motor is so high that it is the only motor spinning very fast.
-When I disconnect the back left motor, the rest of the motors spins, but then the reset issue persists despite the motor drivers placed at the arms. It seems that dividing the motor driver at the arms does not reduce the EMF effects on 
+When I disconnect the back right motor, the rest of the motors spins, but then the reset issue persists despite the motor drivers placed at the arms. It seems that dividing the motor driver at the arms does not reduce the EMF effects on 
 the Arduino Pro Mini. 

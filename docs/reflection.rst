@@ -136,7 +136,7 @@ More details of this assessment under the :ref:`Prototypes section <prototypes>`
 Log Entry: November 30, 2025
 -----------------------------
 
-This log will describe the details to the outcome of Prototype 1.4 and the revisions made to the design. In this prototype, the drone was accelerometer was calibrated 
+This log will describe the details to the outcome of Prototype 1.4 and the revisions made to the design. In this prototype, the drone accelerometer was calibrated 
 and an EMF copper blocking shield was installed to prevent interference from the motor controller to the Arduino Pro Mini. Furthermore, the motor direction was verified
 where the top left motor spins clockwise, top right motor spins counter-clockwise, bottom left motor spins counter-clockwise, and the bottom right motor spins clockwise. 
 The bottom right propeller was wrong preventing the air from being pushed downward. Furthermore for stability reasons, the arms were replaced with popsicle sticks
@@ -170,10 +170,89 @@ More details of this assessment under the :ref:`Prototypes section <prototypes>`
 Log Entry: January 31, 2026
 ----------------------------
 
+This log will describe the details to the outcome of Prototype 1.5 and the revisions made to the design. 
+This prototype is based on redesigning the frame to use popsicle sticks and superglue to reduce the overall weight of the drone and to secure the components in place.
+However, this prototype is still unable to lift off, and suspecting it could be due to weight imbalance of the components, the motors spin at different RPMs and unsynchronized, or the motors spin in the wrong direction as I felt the air being pushed upwards with my hand. 
+
+The next prototype will explore designing a custom PCB for the drone to reduce the wiring connections and to have a more compact design. Furthermore, I will also explore different motor driver components to withstand potential current or 
+power rating issues. More details of this assessment under the :ref:`Prototypes section <prototypes>`. I have planned to recreate the design and name it as “Prototype 2.0” with the fixes needed for the current design.
+
+The possible reasons for the resetting issue are listed below.
+1. The Arduino Pro Mini is not receiving enought power (needs 5V, but getting only 3.3-4V)
+2. Power should be directly to raw pin instead of VCC pin, or both?
+3. Update MultiWii settings exactly to Max Imagination's settings
+4. Resistor at the reset pin to avoid constant drone resetting? (Resetting is primarily due to EMF effects or loss of power from the battery)
+5. Missing EMF blocking copper sheet under the IMU (cover with clear tape and add ground wire)
+6. EMF Copper Blocking Shield under the Arduino Pro Mini- [Helped with wobbling]
+7. Software issue? Try disabling FORCE_GYRO settings in the software
+
+Experimented with possible solutions to out of sync motors.
+1. Issue with propeller - Wrong propeller used on back left [Helped with stability]
+2. Motor direction is correct (top left is CW, top right is CCW, bottom left is CCW, bottom right is CW)
+3. Solder motor wirings directly - [Helped with loss of power to the motors]
+4. Switch forward/backward motor wirings + Max's MultiWii settings. [Was not quite useful]
+5. Research imbalance, seems that left side of the drone pulls up more:
+	- incorrect flight controller orientation
+	- wrong motor/propeller configuration
+	- or a damaged component like a motor or ESC.
+
+A list of unknowns I encountered.
+1. On multiwii the IMU yaw just rotates even though the drone is placed flat on the table.
+2. Calibrate controller settings to match joystick?
+3. Max Imagination's right joystick is rotated - should also rotate
 
 Log Entry: March 28, 2026
 ----------------------------
 
+This log will describe the details to the outcome of Prototype 2.0 and the revisions made to the design. In this prototype, a PCB was designed in EasyEDA and manufactured in JLCPCB.
+The motivations behind this design is to stablize the wiring connections and to have a more compact design.  Furthermore, I have also chosen chosen different motor driver components
+to withstand potential current or power rating issues. These are the final components I have chosen for this prototype.
+
+- 10KOhm resistor 0805 (0.125W) [CRG0805F10K](https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831)
+        * Ensures VGS = 0
+    - Diode: [SS54FSH](https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/SS54FSH/18718584) (5A, 40V)
+        * Maximum rated current must be greater than 2 * stall current (assuming 2-6A)
+    - N- Channel Mosfet: [AO3400A](https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3400A/1855772) or [AO3416](https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3416/1855783)
+        * VDS ~>20-30V is better (rated for high voltage spikes)
+        * RDS ~<10mOhm is better (low power loss)
+        * Gate threshold ~2.5-3.3V (turns on based on battery capacity)
+        * Continuous & Pulsed Current Rating should exceed peak and continuous current draw in drone (5.5A = 25C * 0.22Ah).
+
+However, despite the changes to the design, this drone is still unable to fly and behaves more poorly. When testing the assembled PCB, it looks like most of the current
+is being drawn towards the back right motor causing it the only motor to spin. When I disconnect this motor, the other three motors spin, but the resetting issue persists. 
+It looks like separating the motor driver across the arms does not mitigate the EMF effects causing the drone to keep resetting. I also tried adding a 100uF capacitor between the power
+and ground pin of the MPU6050, but this does not resolve the reset issue. 
+
+These are the list of issues for this prototype.
+
+- Bottom right motor keeps spinning uncontrollably and the only single motor that spins when all motors are connected (need to find a way to separate power between the motors and the microcontroller)
+- Better larger battery did not help
+- 100uF at the MPU6050 did not help
+- Thicker power lines by reinforcing the connections with external wires did not help 
+- Drone still keeps resetting
+- MultiWii is an old software and no longer used - may not even be properly installed due to requiring a specific Java version. 
+
+The possible reasons for these issues are listed below.
+
+1. Power management issues - the battery is not strong enough to drive both the Arduino Pro Mini and the Motors
+2. Power lines are too thin
+3. All lines in this PCB are set to 0.254mm which is the default in EasyEDA. Also the power lengths to the motors should be similar
+4. 90 degree line traces are evident in these connections which can cause impedence issues
+
+.. image:: assets/sample_90_degree_traces.png
+   :width: 300px
+   :align: center
+   :alt: 90 Degree Line Traces
+
+5. Absence of grounded EMF copper blocking shield - a bit hesitant with this since I have tried it before and it did not resolve the resetting issue
+6. Props are placed wrong (air is pushed upward)
+7. Motor placement are not consistent - wiring needs to be at the same start rotation
+8. Use the exact same components as Max's design such as 1N4148
+9. Need to use better power switch (SPST) - might not be driving enough current to the motors
+10. Would adding filtering capacitors at the motors help?
+11. Check PWM signals from motor gates see if it is causing sync issues with the motors
+12. Test controller linear increase in throttle to see if all motors respond consistently
+13. Test individual motors at full power with scale load?
 
 Key Learnings/Takeaways
 -----------------------

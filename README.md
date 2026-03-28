@@ -28,13 +28,17 @@ The following schematic diagram shows the wiring components and hardware for the
 
 ![Controller Schematic](docs/assets/SCH_controller_schematic_1-P1_2026-03-26.png)
 
-The following DXF sketch cutout of the drone can be found under `docs/assets/drone_sketch.dxf`.
+| Controller PCB   | Controller 3D View |
+|------------------|--------------------|
+| <img src="docs/assets/easyeda_controller_pcb.jpg" width="600"> | <img src="docs/assets/easyeda_controller_3d.jpg" width="600"> |
+
+The following DXF sketch cutout of the drone can be found under `design_files/drone_sketch.dxf`.
 
 | Drone Frame Sketch | Drone Frame Body |
 |--------------------|------------------|
-| ![Drone Frame Sketch](docs/assets/fusion_360_controller_sketch.jpg) | ![Drone Frame Body](docs/assets/fusion_360_drone_body.jpg) |
+| ![Drone Frame Sketch](docs/assets/fusion_360_drone_sketch.jpg) | ![Drone Frame Body](docs/assets/fusion_360_drone_body.jpg) |
 
-The following DXF sketch cutout of the controller can be found under `docs/assets/controller_sketch.dxf`.
+The following DXF sketch cutout of the controller can be found under `design_files/controller_sketch.dxf`.
 
 | Controller Frame Sketch | Controller Frame Body |
 |-------------------------|-----------------------|
