@@ -12,7 +12,7 @@ This repository contains both software and electrical components for building a 
 * Aug 31, 2025 [v1.3]: [Prototype 1.3](https://youtu.be/l2KEjdwurtw?si=Yr7yQo37yw-8ZKtF) [Fail] - Drone does not lift off, motors out of sync. 
 * Nov 30, 2025 [v1.4]: [Prototype 1.4](https://youtu.be/Q8TK0ZtKbdI?si=oR4hcLkOsZyx9zIT) [Fail] - Drone does not lift, too heavy, joystick movements does not match MultiWii simulation and drone output behaviour.
 * Jan 31, 2026 [v1.5]: [Prototype 1.5](https://youtu.be/-AvNgkW_3SQ?si=GbaD0aLfVKiBPiV2) [Fail] - Drone does not lift, keeps resetting, joystick movements does not match flight pattern
-* March 28, 2026 [v2.0]: [Prototype 2.0]() [Fail - Final Attempt] - Converted drone to a PCB, but still does not lift, one motor draws most of the power. Power to the components is not well regulated.
+* March 28, 2026 [v2.0]: [Prototype 2.0](https://youtu.be/SzuUDoo7Tts) [Fail - Final Attempt] - Converted drone to a PCB, but still does not lift, one motor draws most of the power. Power to the components is not well regulated.
 
 # Schematics and Diagrams
 
