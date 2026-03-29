@@ -2,7 +2,7 @@
 
 This repository contains both software and electrical components for building a drone using the NRF24L01 radio modules and Arduino.
 
-![Prototype One](docs/assets/prototype_1.5.jpg)
+![Prototype Two](docs/assets/prototype_2.0.jpg)
 
 # Changelog
 
