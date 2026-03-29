@@ -44,7 +44,7 @@ Hardware
 
 3. The PCB should appear as the following when it is received.
 
-.. image:: assets/drone_pcb.png
+.. image:: assets/drone_pcb.jpg
    :width: 600px
    :align: center
    :alt: Drone PCB

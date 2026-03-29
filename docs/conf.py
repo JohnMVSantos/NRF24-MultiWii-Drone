@@ -40,6 +40,14 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+latex_elements = {
+    'classoptions': 'openany,oneside',
+    'preamble': r"""
+\usepackage{etoolbox}
+\preto\section{\clearpage}
+""",
+}
+
 
 
 # -- Options for HTML output -------------------------------------------------

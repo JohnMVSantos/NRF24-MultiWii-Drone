@@ -12,10 +12,10 @@ Materials
 2. NRF24L01+PA+LNA Transceiver Module with 8-pin Breakout Adapters (x1)
 3. Joystick Module for Arduino Dual Axis Sensor (x2)
 4. 3-pin Switch (x2)
-6. Power Switch (x1)
-7. Power Connector (x2)
-8. Charging Connector (x1)
-9. 3.7V LiPO Battery 600mAH (x2)
+5. Power Switch (x1)
+6. Power Connector (x2)
+7. Charging Connector (x1)
+8. 3.7V LiPO Battery 600mAH (x2)
 
 Frame
 #######

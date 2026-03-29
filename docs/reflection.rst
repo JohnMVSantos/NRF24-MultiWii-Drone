@@ -192,9 +192,10 @@ Experimented with possible solutions to out of sync motors.
 3. Solder motor wirings directly - [Helped with loss of power to the motors]
 4. Switch forward/backward motor wirings + Max's MultiWii settings. [Was not quite useful]
 5. Research imbalance, seems that left side of the drone pulls up more:
+
 	- incorrect flight controller orientation
 	- wrong motor/propeller configuration
-	- or a damaged component like a motor or ESC.
+	- or a damaged component like a motor or ESC
 
 A list of unknowns I encountered.
 1. On multiwii the IMU yaw just rotates even though the drone is placed flat on the table.
@@ -210,13 +211,13 @@ to withstand potential current or power rating issues. These are the final compo
 
 - 10KOhm resistor 0805 (0.125W) [CRG0805F10K](https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831)
         * Ensures VGS = 0
-    - Diode: [SS54FSH](https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/SS54FSH/18718584) (5A, 40V)
-        * Maximum rated current must be greater than 2 * stall current (assuming 2-6A)
-    - N- Channel Mosfet: [AO3400A](https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3400A/1855772) or [AO3416](https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3416/1855783)
-        * VDS ~>20-30V is better (rated for high voltage spikes)
-        * RDS ~<10mOhm is better (low power loss)
-        * Gate threshold ~2.5-3.3V (turns on based on battery capacity)
-        * Continuous & Pulsed Current Rating should exceed peak and continuous current draw in drone (5.5A = 25C * 0.22Ah).
+- Diode: [SS54FSH](https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/SS54FSH/18718584) (5A, 40V)
+    * Maximum rated current must be greater than 2 * stall current (assuming 2-6A)
+- N- Channel Mosfet: [AO3400A](https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3400A/1855772) or [AO3416](https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3416/1855783)
+    * VDS ~>20-30V is better (rated for high voltage spikes)
+    * RDS ~<10mOhm is better (low power loss)
+    * Gate threshold ~2.5-3.3V (turns on based on battery capacity)
+    * Continuous & Pulsed Current Rating should exceed peak and continuous current draw in drone (5.5A = 25C * 0.22Ah)
 
 However, despite the changes to the design, this drone is still unable to fly and behaves more poorly. When testing the assembled PCB, it looks like most of the current
 is being drawn towards the back right motor causing it the only motor to spin. When I disconnect this motor, the other three motors spin, but the resetting issue persists. 
@@ -270,6 +271,7 @@ Design Considerations:
 9. Thicker drone arms that doesn't bend is better for stability. The overall surface area of the arms and propeller should be maximized
 10. The battery should be mounted on top for easier connection and allow adjustment for the center of gravity
 11. Choose your components based on the design specifications. These are the components I have chosen based on the design specifications
+
 - 10KOhm resistor 0805 (0.125W)   `CRG0805F10K <https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831>`_
     * Ensures VGS = 0
 - Diode: `SS54FSH <https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/SS54FSH/18718584>`_ (5A, 40V)
@@ -278,7 +280,7 @@ Design Considerations:
     * VDS ~>20-30V is better (rated for high voltage spikes)
     * RDS ~<10mOhm is better (low power loss)
     * Gate threshold ~2.5-3.3V (turns on based on battery capacity)
-    * Continuous & Pulsed Current Rating should exceed peak and continuous current draw in drone (5.5A = 25C * 0.22Ah).
+    * Continuous & Pulsed Current Rating should exceed peak and continuous current draw in drone (5.5A = 25C * 0.22Ah)
 
 Practical Considerations:
 
