@@ -17,7 +17,7 @@ Materials
 7. `SS54FSH <https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/SS54FSH/18718584>`_ Surface Mount Diode (x4)
 8. `AO3400A <https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3400A/1855772>`_ Surface Mount N-Channel MOSFET (x4)
 9. `CRG0805F10K <https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831>`_ 10KOhm Surface Mount Resistor (x4)
-10. 4 Blade 31mm Propellers (x4)
+10. 2 Blade 37mm Propellers (x4)
 11. LiPO Battery 3.7 220mAH (25C) + charger + JST Battery Connector (x1)
 
 Common
@@ -44,71 +44,53 @@ Hardware
 
 3. The PCB should appear as the following when it is received.
 
-4. Assemble and solder the motor driver of the drone along the arms.
+.. image:: assets/drone_pcb.png
+   :width: 600px
+   :align: center
+   :alt: Drone PCB
+
+4. Assemble and solder the motor driver of the drone along the arms with 10KOhm resistor 0805, SS54FSH surface mount diodes, and AO3400A N-channel Mosfets.
+
+.. image:: assets/drone_motor_driver_connection.jpg
+   :width: 600px
+   :align: center
+   :alt: Drone Motor Driver Connections
 
 5. Solder the NRF24L01+ Transceiver Module.
 
+.. image:: assets/drone_nrf24l01_connection.jpg
+   :width: 600px
+   :align: center
+   :alt: Drone NRF24L01 Connections
+
 6. Solder the switch and the buzzer to the PCB.
+
+.. list-table::
+   :widths: 50 50
+   :header-rows: 0
+
+   * - .. image:: assets/drone_switch_connection.jpg
+         :width: 300px
+         :alt: Switch Connection
+     - .. image:: assets/drone_buzzer_connection.jpg
+         :width: 300px
+         :alt: Buzzer Connection
 
 7. Solder the Arduino Pro Mini to the PCB.
 
 8. Solder the MPU6050 on top of the Arduino Pro Mini. Solder the power connections of the MPU6050 and the NRF24L01.
 
-9. The final assembled drone should look like the following.
-
-
-1. Assemble and solder the motor driver on a 3x8 perforated board with the S12300DS Surface Mount N-Channel MOSFETs (x4), 1N4148 Surface Mount Diodes (x4), and 10KOhm Surface Mount Resistors (x4)
-
-.. image:: assets/schematic_motor_driver.png
-   :width: 400px
-   :align: center
-   :alt: Motor Driver Circuit
-
-2. The assembled motor driver circuit should look like the following.
-
-.. list-table::
-   :widths: 50 50
-   :header-rows: 0
-
-   * - .. image:: assets/assembled-motor-driver.jpg
-         :width: 300px
-         :alt: Assembled Motor Driver
-     - .. image:: assets/assembled-motor-driver-backside.jpg
-         :width: 300px
-         :alt: Assembled Motor Driver Backside
-
-3. Solder the MPU6050 and NRF24L01+ Transceiver Module connections to the Arduino Pro Mini as shown in the schematic below.
-
-.. image:: assets/schematic_drone.png
+.. image:: assets/drone_imu_transciever_connection.jpg
    :width: 600px
    :align: center
-   :alt: Drone Circuit Schematic
+   :alt: Drone MPU6050 and NRF24L01 Connections
 
-4. The soldered circuit should look like the following.
+9. The final assembled drone should look like the following.
 
-.. list-table::
-   :widths: 50 50
-   :header-rows: 0
-
-   * - .. image:: assets/assembled-drone-communication-circuit.jpg
-         :width: 300px
-         :alt: Assembled Drone Communication Circuit 
-     - .. image:: assets/assembled-drone-communication-circuit-left.jpg
-         :width: 300px
-         :alt: Assembled Drone Communication Circuit (Left)
-
-5. Solder the motor driver circuit connections to the Arduino Pro Mini. This circuit is stacked below the Arduino Pro Mini. The final module connections such as the buzzer and the camera can also be made in this stage.
-
-.. list-table::
-   :widths: 50 50
-   :header-rows: 0
-
-   * - .. image:: assets/assembled-drone-circuit.jpg
-         :width: 300px
-         :alt: Assembled Drone Circuit 
-     - .. image:: assets/assembled-drone-circuit-left.jpg
-         :width: 300px
-         :alt: Assembled Drone Circuit (Left)
+.. image:: assets/drone_assembled_pcb.jpg
+   :width: 600px
+   :align: center
+   :alt: Drone Assembled PCB
 
 Software
 ##########
@@ -138,21 +120,3 @@ Software
    :width: 600px
    :align: center
    :alt: Hit Reset
-
-|
-
-Assembly
-##########
-
-The drone assembly should look like the following.
-
-.. list-table::
-   :widths: 50 50
-   :header-rows: 0
-
-   * - .. image:: assets/drone-exploded-view.jpg
-         :width: 300px
-         :alt: Exploded View
-     - .. image:: assets/drone-assembled.jpg
-         :width: 300px
-         :alt: Assembled Drone 

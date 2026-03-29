@@ -5,7 +5,7 @@ NRF24-MultiWii-Drone
    :maxdepth: 4
 
    intro
-   prototypes
    drone_tutorial
    controller_tutorial
+   prototypes
    reflection
