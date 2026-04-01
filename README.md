@@ -137,13 +137,21 @@ These are the list of vendors that sold components that did not work or were fau
 # Future Work
 
 ## v2.1
-- Place copper shield between motor drivers and the Atmega328P/MPU6050 for EMF shielding
+- Update PCB version to 2.1 (do not overwrite previous PCB design)
 - Try components 1N4148 Diode, S12300DS n-Mosfet, 10KOhm 0805 resistor
+- Place copper shield between motor drivers and the Atmega328P/MPU6050 for EMF shielding
+- update to 3-pin slide switch
+- thicker power lines, avoid 90 degree traces, similar power lengths
 - Controller PCB
-- Design changes for proper flight
+- consistent motor placement - wiring needs to be at the same start rotation
+- 3.7V 30C battery
+- 10uF at the MPU6050 and another 10uF at the VCC/GND pins
+- Alot of movements to MultiWii is needed to simulate the MPU6050?
+- Check power output at the motor gates (damaged mosfets?) - check PWM signals at the output
 - Research better power management for motors and microcontroller
 
 ## v3.0
+- If it doesn't fly (use Arduino Nano board and standard MPU6050? This requires regulators since Arduino Nano inputs 5V)
 - Incorporatte FPV camera - make it see
 - Add AI detections and features
 
