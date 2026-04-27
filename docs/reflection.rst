@@ -255,6 +255,64 @@ The possible reasons for these issues are listed below.
 12. Test controller linear increase in throttle to see if all motors respond consistently
 13. Test individual motors at full power with scale load?
 
+Log Entry: April 26, 2026
+---------------------------
+
+This log will describe the details to the outcome of Prototype 2.1 and the revisions made to the design. 
+The PCB design involves placing the motor driver at the bottom layer along the arms of the drone. 
+This was an excellent design choice since the drone was more stable and the resetting issue was less frequent which could indicate the EMF effects towards the microcontroller was reduced. 
+Furthermore, I have tried to balance the weight by distributing the components more evenly on the PCB. For example, the ON/OFF switch and the power pins are placed in opposite ends of the drone; the NRF24L01 is more centered and finally the battery is secured at the bottom centered on the PCB.
+I have also used a better battery with a higher discharge rate of 30C, 450mAH, and 3.7V for better power supply to the drone. 
+I have also updated the power lines to be 0.4mm thick in comparison to traditional lines only at 0.254mm thick. This reduces resistance added on the power lines for more direct current flow. There are also no 90 degree traces in the PCB design which can cause impedance issues. 
+These power lines also have similar lengths to ensure the power is distributed evenly across the motors.
+I have also reverted to using 1N4148 diodes and S12300DS n-Mosfets for the motor driver as these are commonly used in drone motor drivers and should be sufficient for the power requirements of the drone. Although I have noticed that one of the mosfets burned out and had to replace this - this occurence was uncommon.
+It was necessary for me to add 10uF capacitors at the power inputs of the NRF24L01. Otherwise, the signal becomes lost and the drone throttle continuously increases until it reaches the maximum state; throttle down is no longer responding. This issue caused two of the motors (FL and BL) to burn out. After adding this capacitor, the signal is more stable and the drone responds properly to the controller's commands.
+Though the front left motor is unstable - sometimes doesn't spin (no issues in the  mosfets or diodes in the driver) - poor motor/connection is plausible.
+In addition, I have also added 100uF capacitor at the power input of the MPU6050 to stabilize any remaining reset issues. After adding this capacitor, I no longer found any occurences of the drone resetting.
+The motor placements are also more consistent and the wiring is at the same start rotation. The propeller placements are also correct as the air is being pushed downwards.
+Next I have checked the frequency of the PWM signals at full power to ensure it is consistent across all motors. Using an oscilloscope, I found that each PWM pins outputs a consistent 5.0MHz which is enough to drive the motors.
+In the MultiWii software, I have simulated alot of movements in the drone to ensure the IMU correctly translates the drone movements.
+
+The biggest change was remapping the motor designations in the software output.cpp based on the following comparisons to various projects and pin designations.
+
+                Max   Electro  Code     Test Results
+Motor[0] => BR  D3    D9         D9     FR
+Motor[1] => FR  D9    D6         D6     FL
+Motor[2] => BL  D5    D5         D5     BL
+Motor[3] => FL  D6    D3         D3     BR
+
+It seems that the code matches Electronoobs setup. Since I have followed Max Imaginations PWM wirings, I have to modify the software to reflect this wiring. 
+
+Thus the software needs to match the following configuration.
+
+Motor[0] => FR
+Motor[1] => FL
+Motor[2] => BL
+Motor[3] => BR
+
+So the following lines in output.cpp was modified to:
+
+* Before
+
+```
+motor[0] = PIDMIX(-1,+1,-1); //REAR_R
+motor[1] = PIDMIX(-1,-1,+1); //FRONT_R
+motor[2] = PIDMIX(+1,+1,+1); //REAR_L
+motor[3] = PIDMIX(+1,-1,-1); //FRONT_L
+```
+
+* After
+
+```
+motor[0] = PIDMIX(-1,-1,+1); //FRONT_R
+motor[1] = PIDMIX(+1,-1,-1); //FRONT_L
+motor[2] = PIDMIX(+1,+1,+1); //REAR_L
+motor[3] = PIDMIX(-1,+1,-1); //REAR_R
+```
+
+Regarding the controller, I have also designed a PCB version of the controller. However, the inital protoype is still better at maintaing the communication with the drone. I still need to take a closer look into why the connection quickly gets lost with this new controller, despite the same connections.
+I will try adding a filtering capacitor at the power input of the NRF24L01 to stabilize the signal and reduce noise. Otherwise, I will take a look at reusing the same NRF24L01 that works from the previous controller prototype.
+
 Key Learnings/Takeaways
 -----------------------
 

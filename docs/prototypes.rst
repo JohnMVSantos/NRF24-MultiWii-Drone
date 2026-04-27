@@ -236,7 +236,7 @@ Prototype 2.0
 
 |
 
-Prototype 2.0 is the seventh and last attempt at building the NRF24-MultiWii-Drone. This prototype is based on a PCB design using EasyEDA and manufactured by JLCPCB. 
+Prototype 2.0 is the seventh attempt at building the NRF24-MultiWii-Drone. This prototype is based on a PCB design using EasyEDA and manufactured by JLCPCB. 
 The PCB is designed to be its own frame and has the components soldered directly onto the board. There were component changes to the motor driver based on the following characteristics:
 
 - 10KOhm resistor 0805 (0.125W)   `CRG0805F10K <https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831>`_
@@ -262,3 +262,79 @@ The previous components had the following limitations:
 Despite the component changes and the PCB design, the drone still could not lift off and behaves even more poorly. At certain times the current drawn from the back right motor is so high that it is the only motor spinning very fast.
 When I disconnect the back right motor, the rest of the motors spins, but then the reset issue persists despite the motor drivers placed at the arms. It seems that dividing the motor driver at the arms does not reduce the EMF effects on 
 the Arduino Pro Mini. 
+
+Prototype 2.1
+-------------
+
+.. image:: assets/prototype_2.1.jpg
+   :width: 300px
+   :align: center
+   :alt: Prototype 2.1
+
+|
+
+Prototype 2.1 is the eight attempt at building the NRF24-MultiWii-Drone. This prototype is based on the same PCB design as Prototype 2.0, but with component changes to the motor driver and other design changes to address the issues found in Prototype 2.0.
+This drone was able to lift off, but the flight is still quite unstable. Here are the design choices that made drastic improvements.
+
+- revert to components 1N4148 Diode, S12300DS n-Mosfet, 10KOhm 0805 resistor
+- place copper shield between motor drivers and the Atmega328P/MPU6050 for EMF shielding
+- thicker power lines, zero 90 degree traces, similar power lengths
+- 10uF capacitor at the NRF24L01 power pins
+- 100uF capacitor at the MPU6050 power pins
+- 3.7V 30C 450mAH battery
+- consistent motor placement - wiring needs to be at the same start rotation
+- Minthrottle is set to 1050 based on the comment description "for brushed ESCs like ladybird"
+
+The importance of capacitors at the power pins:
+
+1. No capacitor -> unable to throttle down (motors keeps spinning) - looks like loss of signal at the NRF24L01 module
+2. 10uF capacitor at the NRF24L01 power inputs - motors become out of sync - maybe loss of power at the motor terminals
+3. 100uF capacitor at the MPU6050 - only the back left motor is not spinning
+4. 100uF capacitor at the microcontroller - no change from previous point
+5. 470uF capacitor at the battery terminals - front left and back left motors no longer spin
+
+Turns out problems (3-5) are due to the motors burning out from problem 1 which caused overworking in the motors potentially burning inside components.
+
+The biggest change was remapping the motor designations in the software output.cpp based on the following comparisons to various projects and pin designations.
+
+                Max   Electro  Code     Test Results
+Motor[0] => BR  D3    D9         D9     FR
+Motor[1] => FR  D9    D6         D6     FL
+Motor[2] => BL  D5    D5         D5     BL
+Motor[3] => FL  D6    D3         D3     BR
+
+It seems that the code matches Electronoobs setup. Since I have followed Max Imaginations PWM wirings, I have to modify the software to reflect this wiring. 
+
+Thus the software needs to match the following configuration.
+
+Motor[0] => FR
+Motor[1] => FL
+Motor[2] => BL
+Motor[3] => BR
+
+So the following lines in output.cpp was modified to:
+
+* Before
+
+```
+motor[0] = PIDMIX(-1,+1,-1); //REAR_R
+motor[1] = PIDMIX(-1,-1,+1); //FRONT_R
+motor[2] = PIDMIX(+1,+1,+1); //REAR_L
+motor[3] = PIDMIX(+1,-1,-1); //FRONT_L
+```
+
+* After
+
+```
+motor[0] = PIDMIX(-1,-1,+1); //FRONT_R
+motor[1] = PIDMIX(+1,-1,-1); //FRONT_L
+motor[2] = PIDMIX(+1,+1,+1); //REAR_L
+motor[3] = PIDMIX(-1,+1,-1); //REAR_R
+```
+
+After these changes, I still face issues with poor motor response at the front left motor. Though it spins sometimes and allows the drone to liftoff, it does lose its spin from time to time. 
+I will try to make these design changes to improve the response.
+
+1. Reinforce connections with external wiring for the front left motor
+2. Experiment with various PID values to see if it improves the motor response and stability of the drone
+3. Try to add a capacitor at the NRF24L01 power pins of the controller to see if it improves the signal strength and response of the drone  
