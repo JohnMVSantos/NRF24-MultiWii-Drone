@@ -297,40 +297,47 @@ Turns out problems (3-5) are due to the motors burning out from problem 1 which 
 
 The biggest change was remapping the motor designations in the software output.cpp based on the following comparisons to various projects and pin designations.
 
-                Max   Electro  Code     Test Results
-Motor[0] => BR  D3    D9         D9     FR
-Motor[1] => FR  D9    D6         D6     FL
-Motor[2] => BL  D5    D5         D5     BL
-Motor[3] => FL  D6    D3         D3     BR
++-----------+-----+----------+------+--------------+
+| Motor     | Max | Electro  | Code | Test Results |
++===========+=====+==========+======+==============+
+| Motor[0]  | BR  | D3       | D9   | FR           |
++-----------+-----+----------+------+--------------+
+| Motor[1]  | FR  | D9       | D6   | FL           |
++-----------+-----+----------+------+--------------+
+| Motor[2]  | BL  | D5       | D5   | BL           |
++-----------+-----+----------+------+--------------+
+| Motor[3]  | FL  | D6       | D3   | BR           |
++-----------+-----+----------+------+--------------+
 
 It seems that the code matches Electronoobs setup. Since I have followed Max Imaginations PWM wirings, I have to modify the software to reflect this wiring. 
 
 Thus the software needs to match the following configuration.
 
-Motor[0] => FR
-Motor[1] => FL
-Motor[2] => BL
-Motor[3] => BR
+* Motor[0] => FR
+* Motor[1] => FL
+* Motor[2] => BL
+* Motor[3] => BR
 
 So the following lines in output.cpp was modified to:
 
-* Before
+**Before**
 
-```
-motor[0] = PIDMIX(-1,+1,-1); //REAR_R
-motor[1] = PIDMIX(-1,-1,+1); //FRONT_R
-motor[2] = PIDMIX(+1,+1,+1); //REAR_L
-motor[3] = PIDMIX(+1,-1,-1); //FRONT_L
-```
+.. code-block:: shell
 
-* After
+    motor[0] = PIDMIX(-1,+1,-1); //REAR_R
+    motor[1] = PIDMIX(-1,-1,+1); //FRONT_R
+    motor[2] = PIDMIX(+1,+1,+1); //REAR_L
+    motor[3] = PIDMIX(+1,-1,-1); //FRONT_L
 
-```
-motor[0] = PIDMIX(-1,-1,+1); //FRONT_R
-motor[1] = PIDMIX(+1,-1,-1); //FRONT_L
-motor[2] = PIDMIX(+1,+1,+1); //REAR_L
-motor[3] = PIDMIX(-1,+1,-1); //REAR_R
-```
+
+**After**
+
+.. code-block:: shell
+    
+    motor[0] = PIDMIX(-1,-1,+1); //FRONT_R
+    motor[1] = PIDMIX(+1,-1,-1); //FRONT_L
+    motor[2] = PIDMIX(+1,+1,+1); //REAR_L
+    motor[3] = PIDMIX(-1,+1,-1); //REAR_R
 
 After these changes, I still face issues with poor motor response at the front left motor. Though it spins sometimes and allows the drone to liftoff, it does lose its spin from time to time. 
 I will try to make these design changes to improve the response.

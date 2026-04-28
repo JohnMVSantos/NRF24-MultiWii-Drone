@@ -2,7 +2,7 @@
 
 This repository contains both software and electrical components for building a drone using the NRF24L01 radio modules and Arduino.
 
-![Prototype Two](docs/assets/prototype_2.0.jpg)
+![Prototype Two](docs/assets/prototype_2.1.jpg)
 
 # Changelog
 
@@ -19,7 +19,7 @@ This repository contains both software and electrical components for building a 
 
 The following schematic diagram shows the wiring components and hardware for the drone.
 
-![Drone Schematic](docs/assets/SCH_drone_schematic_1-P1_2026-03-26.png)
+![Drone Schematic](docs/assets/SCH_drone_schematic_v2.1_1-P1_2026-04-27.png)
 
 | Drone PCB        | Drone 3D View |
 |------------------|---------------|
@@ -27,7 +27,7 @@ The following schematic diagram shows the wiring components and hardware for the
 
 The following schematic diagram shows the wiring components and hardware for the drone controller. 
 
-![Controller Schematic](docs/assets/SCH_controller_schematic_1-P1_2026-03-26.png)
+![Controller Schematic](docs/assets/SCH_controller_schematic_v2.1_1-P1_2026-04-27.png)
 
 | Controller PCB   | Controller 3D View |
 |------------------|--------------------|
