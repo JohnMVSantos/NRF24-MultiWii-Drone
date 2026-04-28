@@ -56,7 +56,6 @@ _build
 *.jar
 *.rar
 *.tar
-*.zip
 
 # Logs and databases #
 ######################
