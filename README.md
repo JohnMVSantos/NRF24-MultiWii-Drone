@@ -107,13 +107,13 @@ make latexpdf
 
 2. Test n-channel mosfet Integrity and ensure drain voltage approaches zero as gate voltage increases
 
-![Mosfet Testing](assets/mosfet-diagram.png)
+![Mosfet Testing](docs/assets/mosfet-diagram.png)
 
-![Mosfet Testing Probes](assets/20260429_225320.jpg)
+![Mosfet Testing Probes](docs/assets/20260429_225320.jpg)
 
 3. Test Motor terminals if voltage is received
 
-![Motor Terminal Voltage](assets/motor-voltage-input.png)
+![Motor Terminal Voltage](docs/assets/motor-voltage-input.png)
 
 ## Practical Considerations
 
