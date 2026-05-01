@@ -278,12 +278,13 @@ This drone was able to lift off, but the flight is still quite unstable. Here ar
 
 - revert to components 1N4148 Diode, S12300DS n-Mosfet, 10KOhm 0805 resistor
 - place copper shield between motor drivers and the Atmega328P/MPU6050 for EMF shielding
-- thicker power lines, zero 90 degree traces, similar power lengths
+- thicker (0.45-0.50mm) power lines, zero 90 degree traces, similar power lengths
 - 10uF capacitor at the NRF24L01 power pins
 - 100uF capacitor at the MPU6050 power pins
-- 3.7V 30C 450mAH battery
+- 3.7V 30C 450mAH battery (minimum 25C)
 - consistent motor placement - wiring needs to be at the same start rotation
 - Minthrottle is set to 1050 based on the comment description "for brushed ESCs like ladybird"
+- larger propellers -> larger surface area -> bigger lift
 
 The importance of capacitors at the power pins:
 
@@ -297,17 +298,17 @@ Turns out problems (3-5) are due to the motors burning out from problem 1 which 
 
 The biggest change was remapping the motor designations in the software output.cpp based on the following comparisons to various projects and pin designations.
 
-+-----------+-----+----------+------+--------------+
-| Motor     | Max | Electro  | Code | Test Results |
-+===========+=====+==========+======+==============+
-| Motor[0]  | BR  | D3       | D9   | FR           |
-+-----------+-----+----------+------+--------------+
-| Motor[1]  | FR  | D9       | D6   | FL           |
-+-----------+-----+----------+------+--------------+
-| Motor[2]  | BL  | D5       | D5   | BL           |
-+-----------+-----+----------+------+--------------+
-| Motor[3]  | FL  | D6       | D3   | BR           |
-+-----------+-----+----------+------+--------------+
++-----------+----------------------+---------------------------------+---------------+------+--------------+
+| Motor     | Intended Orientation | Max Imagination (Current Setup) | Electronoobs  | Code | Test Results |
++===========+======================+=================================+===============+======+==============+
+| Motor[0]  | BR                   | D3                              | D9            | D9   | FR           |
++-----------+----------------------+---------------------------------+---------------+------+--------------+
+| Motor[1]  | FR                   | D9                              | D6            | D6   | FL           |
++-----------+----------------------+---------------------------------+---------------+------+--------------+
+| Motor[2]  | BL                   | D5                              | D5            | D5   | BL           |
++-----------+----------------------+---------------------------------+---------------+------+--------------+
+| Motor[3]  | FL                   | D6                              | D3            | D3   | BR           |
++-----------+----------------------+---------------------------------+---------------+------+--------------+
 
 It seems that the code matches Electronoobs setup. Since I have followed Max Imaginations PWM wirings, I have to modify the software to reflect this wiring. 
 

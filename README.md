@@ -2,6 +2,8 @@
 
 This repository contains both software and electrical components for building a drone using the NRF24L01 radio modules and Arduino.
 
+[EasyEDA Project](https://oshwlab.com/john.santos/multiwii-arduino-drone-project)
+
 ![Prototype Two](docs/assets/prototype_2.1.jpg)
 
 # Changelog
@@ -13,7 +15,7 @@ This repository contains both software and electrical components for building a 
 * Nov 30, 2025 [v1.4]: [Prototype 1.4](https://youtu.be/Q8TK0ZtKbdI?si=oR4hcLkOsZyx9zIT) [Fail] - Drone does not lift, too heavy, joystick movements does not match MultiWii simulation and drone output behaviour.
 * Jan 31, 2026 [v1.5]: [Prototype 1.5](https://youtu.be/-AvNgkW_3SQ?si=GbaD0aLfVKiBPiV2) [Fail] - Drone does not lift, keeps resetting, joystick movements does not match flight pattern
 * Mar 28, 2026 [v2.0]: [Prototype 2.0](https://youtu.be/SzuUDoo7Tts) [Fail] - Converted drone to a PCB, but still does not lift, one motor draws most of the power. Power to the components is not well regulated.
-* Apr 27, 2026 [v2.1]: [Prototype 2.1]() [Pass] - PCB adjustments to reduce EMF effects and better weight distributions; software adjustments for correct motor mapping.
+* Apr 27, 2026 [v2.1]: [Prototype 2.1](https://youtu.be/SVGbemywxcY) [Pass] - PCB adjustments to reduce EMF effects and better weight distributions; software adjustments for correct motor mapping.
 
 # Schematics and Diagrams
 
@@ -101,6 +103,18 @@ make latexpdf
         * Gate threshold ~2.5-3.3V (turns on based on battery capacity)
         * Continuous & Pulsed Current Rating should exceed peak and continuous current draw in drone (5.5A = 25C * 0.22Ah).
 
+1. Use an oscilloscope to check the PWM signals from the motor gates to see if it is causing sync issues with the motors - ensure consistent PWM frequency across all four motors
+
+2. Test n-channel mosfet Integrity and ensure drain voltage approaches zero as gate voltage increases
+
+![Mosfet Testing](assets/mosfet-diagram.png)
+
+![Mosfet Testing Probes](assets/20260429_225320.jpg)
+
+3. Test Motor terminals if voltage is received
+
+![Motor Terminal Voltage](assets/motor-voltage-input.png)
+
 ## Practical Considerations
 
 1. Check NRF24 radio communication first before assembling the drone. Always test parts individually
@@ -136,20 +150,6 @@ These are the list of vendors that sold components that did not work or were fau
 - **Aideepen**: NRF24L01+PA+LNA Transeiver Module (Faulty and did not communicate)
 
 # Future Work
-
-## v2.1
-- Update PCB version to 2.1 (do not overwrite previous PCB design)
-- Try components 1N4148 Diode, S12300DS n-Mosfet, 10KOhm 0805 resistor
-- Place copper shield between motor drivers and the Atmega328P/MPU6050 for EMF shielding
-- update to 3-pin slide switch
-- thicker power lines, avoid 90 degree traces, similar power lengths
-- Controller PCB
-- consistent motor placement - wiring needs to be at the same start rotation
-- 3.7V 30C battery
-- 10uF at the MPU6050 and another 10uF at the VCC/GND pins
-- Alot of movements to MultiWii is needed to simulate the MPU6050?
-- Check power output at the motor gates (damaged mosfets?) - check PWM signals at the output
-- Research better power management for motors and microcontroller
 
 ## v3.0
 - If it doesn't fly (use Arduino Nano board and standard MPU6050? This requires regulators since Arduino Nano inputs 5V)
