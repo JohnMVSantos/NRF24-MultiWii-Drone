@@ -14,11 +14,11 @@ Materials
 4. Lilypad 5V Buzzer Speaker (x1)
 5. Micro 600TVL FPV Camera with 5.8GHz 25mW Transmitter (x1)
 6. 6x15mm 0.8mm Shaft Coreless Motors 19000KV (x4)
-7. `SS54FSH <https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/SS54FSH/18718584>`_ Surface Mount Diode (x4)
-8. `AO3400A <https://www.digikey.ca/en/products/detail/alpha-omega-semiconductor-inc/AO3400A/1855772>`_ Surface Mount N-Channel MOSFET (x4)
+7. `1N4148 <https://www.digikey.ca/en/products/detail/diodes-incorporated/1N4148WS-7-F/815127>`_ Surface Mount Diode (x4)
+8. `Si2300DS <https://www.digikey.ca/en/products/detail/vishay-siliconix/SI2302CDS-T1-E3/2345137>`_ Surface Mount N-Channel MOSFET (x4)
 9. `CRG0805F10K <https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831>`_ 10KOhm Surface Mount Resistor (x4)
 10. 2 Blade 37mm Propellers (x4)
-11. LiPO Battery 3.7 220mAH (25C) + charger + JST Battery Connector (x1)
+11. LiPO Battery 3.7 450mAH (30C) + charger + JST Battery Connector (x1)
 
 Common
 ---------
@@ -33,11 +33,11 @@ Common
 Hardware
 #############
 
-1. Take the Gerber files for the drone PCB and upload them to JLCPCB to manufacture the PCB. The Gerber file can be found in the `design_files/Gerber_Drone_PCB_2026-03-27.zip` 
+1. Take the Gerber files for the drone PCB and upload them to JLCPCB to manufacture the PCB. The Gerber file can be found in the `design_files/Gerber_Drone_PCB_v2.1_2026-05-01.zip` 
 
 2. The drone PCB is based off the following schematic.
 
-.. image:: assets/SCH_drone_schematic_1-P1_2026-03-26.png
+.. image:: assets/SCH_drone_schematic_v2.1_1-P1_2026-04-27.png
    :width: 600px
    :align: center
    :alt: Drone Circuit Schematic
@@ -49,7 +49,7 @@ Hardware
    :align: center
    :alt: Drone PCB
 
-4. Assemble and solder the motor driver of the drone along the arms with 10KOhm resistor 0805, SS54FSH surface mount diodes, and AO3400A N-channel Mosfets.
+4. Assemble and solder the motor driver of the drone along the arms with 10KOhm resistor 0805, 1N4148 surface mount diodes, and Si2300DS N-channel Mosfets.
 
 .. image:: assets/drone_motor_driver_connection.jpg
    :width: 600px

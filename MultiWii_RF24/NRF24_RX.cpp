@@ -87,7 +87,7 @@ void NRF24_Read_RC() {
   nrf24_rcData[YAW] =       map(MyData.roll,     0, 255, 2000, 1000);
 
   nrf24_rcData[AUX1] =       map(MyData.AUX1,     0, 1, 2000, 1000);
-  nrf24_rcData[AUX2] =       map(MyData.AUX2,     0, 1, 2000, 1000);
+  nrf24_rcData[AUX2] =       map(MyData.AUX2,     0, 1, 1000, 2000);
   
 }
 

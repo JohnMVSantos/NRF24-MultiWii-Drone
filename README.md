@@ -89,10 +89,9 @@ make latexpdf
 5. The IMU needs to be sitting flat and secured properly to prevent wobbling
 6. Capacitors helps reduce power fluctuations and noise
 7. Position all 4 motors evenly and in the same manner. The start rotation should be consistent
-8. Smaller surface area can cause instability? I think it is better for longer arms and larger propellers to increase the drone surface area
+8. Smaller surface area can cause instability? I think it is better for longer arms and larger propellers to increase the drone surface area - larger lift
 9. Thicker drone arms that doesn't bend is better for stability. The overall surface area of the arms and propeller should be maximized
-10. The battery should be mounted on top for easier connection and allow adjustment for the center of gravity
-11. Choose your components based on the design specifications. These are the components I have chosen based on the design specifications
+10. Choose your components based on the design specifications. These are the components I have chosen based on the design specifications
     - 10KOhm resistor 0805 (0.125W) [CRG0805F10K](https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831)
         * Ensures VGS = 0
     - Diode: [SS54FSH](https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/SS54FSH/18718584) (5A, 40V)
@@ -119,11 +118,10 @@ make latexpdf
 
 1. Check NRF24 radio communication first before assembling the drone. Always test parts individually
 2. Keep it simple and complexity should not come first. Achieve minimum functionality for initial developments
-3. Keep electrical components away from the conductive carbon fiber frame (if using carbon fiber) and insulate properly
-4. Better to use solder with lead, but prone to contamination (ensure proper storage)
-5. Thin kapton tapes do not provide as much insulation as actual electrical tape. Though electrical tape is heavier
-6. Ensure the motor power can carry the total load of the drone
-7. Ensure prototype works before designing a final PCB
+3. Better to use solder with lead, but prone to contamination (ensure proper storage)
+4. Thin kapton tapes do not provide as much insulation as actual electrical tape. Though electrical tape is heavier
+5. Ensure the motor power can carry the total load of the drone
+6. Ensure prototype works before designing a final PCB
 
 # Successful Vendors
 

@@ -37,11 +37,11 @@ to fit the electrical components of this drone controller.
 Electrical
 #############
 
-1. If you choose to assemble to PCB, you can take the Gerber files for the controller PCB and upload them to JLCPCB to manufacture the PCB. The Gerber file can be found in the `design_files/Gerber_Controller_PCB_2026-03-28.zip`. Otherwise, you can proceed with the next steps for the alternative method.
+1. If you choose to assemble to PCB, you can take the Gerber files for the controller PCB and upload them to JLCPCB to manufacture the PCB. The Gerber file can be found in the `design_files/Gerber_Controller_PCB_v2.1_2026-05-01.zip`. Otherwise, you can proceed with the next steps for the alternative method.
 
 2. Assemble and solder the electrical components based on this schematic diagram.
 
-.. image:: assets/SCH_controller_schematic_1-P1_2026-03-26.png
+.. image:: assets/SCH_controller_schematic_v2.1_1-P1_2026-04-27.png
    :width: 400px
    :align: center
    :alt: Controller Circuit Schematic

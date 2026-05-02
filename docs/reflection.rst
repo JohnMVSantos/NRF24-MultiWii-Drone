@@ -356,10 +356,9 @@ Design Considerations:
 5. The IMU needs to be sitting flat and secured properly to prevent wobbling
 6. Capacitors helps reduce power fluctuations and noise
 7. Position all 4 motors evenly and in the same manner. The start rotation should be consistent
-8. Smaller surface area can cause instability? I think it is better for longer arms and larger propellers to increase the drone surface area
+8. Smaller surface area can cause instability? I think it is better for longer arms and larger propellers to increase the drone surface area -larger lift
 9. Thicker drone arms that doesn't bend is better for stability. The overall surface area of the arms and propeller should be maximized
-10. The battery should be mounted on top for easier connection and allow adjustment for the center of gravity
-11. Choose your components based on the design specifications. These are the components I have chosen based on the design specifications
+10. Choose your components based on the design specifications. These are the components I have chosen based on the design specifications
 
 - 10KOhm resistor 0805 (0.125W)   `CRG0805F10K <https://www.digikey.ca/en/products/detail/te-connectivity-passive-product/CRG0805F10K/2380831>`_
     * Ensures VGS = 0
