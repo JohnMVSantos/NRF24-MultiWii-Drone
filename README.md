@@ -2,10 +2,6 @@
 
 This repository contains both software and electrical components for building a drone using the NRF24L01 radio modules and Arduino.
 
-[EasyEDA Project](https://oshwlab.com/john.santos/multiwii-arduino-drone-project)
-
-<!-- ![Prototype Two](docs/assets/prototype_2.1.jpg) -->
-
 # New PCBs from PCBWay
 
 ![PCBWay Boards](docs/assets/pcbway_boards.jpg)
@@ -28,6 +24,10 @@ Using PCBWay's online platform, I was able to import all my gerber files I desig
 * Jan 31, 2026 [v1.5]: [Prototype 1.5](https://youtu.be/-AvNgkW_3SQ?si=GbaD0aLfVKiBPiV2) [Fail] - Drone does not lift, keeps resetting, joystick movements does not match flight pattern
 * Mar 28, 2026 [v2.0]: [Prototype 2.0](https://youtu.be/SzuUDoo7Tts) [Fail] - Converted drone to a PCB, but still does not lift, one motor draws most of the power. Power to the components is not well regulated.
 * Apr 27, 2026 [v2.1]: [Prototype 2.1](https://youtu.be/SVGbemywxcY) [Pass] - PCB adjustments to reduce EMF effects and better weight distributions; software adjustments for correct motor mapping.
+
+[EasyEDA Project](https://oshwlab.com/john.santos/multiwii-arduino-drone-project)
+
+![Prototype Two](docs/assets/prototype_2.1.jpg)
 
 # Schematics and Diagrams
 
