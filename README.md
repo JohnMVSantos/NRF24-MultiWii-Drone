@@ -4,7 +4,19 @@ This repository contains both software and electrical components for building a 
 
 [EasyEDA Project](https://oshwlab.com/john.santos/multiwii-arduino-drone-project)
 
-![Prototype Two](docs/assets/prototype_2.1.jpg)
+<!-- ![Prototype Two](docs/assets/prototype_2.1.jpg) -->
+
+# New PCBs from PCBWay
+
+![PCBWay Boards](docs/assets/pcbway_boards.jpg)
+
+PCBWay provides an [excellent platform](https://www.pcbway.com/orderonline.aspx) for ordering and customizing your PCB designs. The platform provides easy-to-follow and easy-to-use PCB specifications that meets my needs such as setting the board quantity, the number of layers, the PCB thickness, material type, and much more! 
+
+![PCBWay Online Platform](docs/assets/pcbway_online_platform.png)
+
+Furthermore, support is always available either through the platform or PCBWay will reach out to you directly if they require further specification or if they observe potential risks from their thorough review of your design.
+
+Using PCBWay's online platform, I was able to import all my gerber files I designed using EasyEDA and successfully ordered the boards and arrived upon my location without any issues or concerns. This is a platform I would highly suggest for designers to use!
 
 # Changelog
 
