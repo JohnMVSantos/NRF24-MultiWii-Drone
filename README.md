@@ -2,9 +2,17 @@
 
 This repository contains both software and electrical components for building a drone using the NRF24L01 radio modules and Arduino.
 
-[EasyEDA Project](https://oshwlab.com/john.santos/multiwii-arduino-drone-project)
+# New PCBs from PCBWay
 
-![Prototype Two](docs/assets/prototype_2.1.jpg)
+![PCBWay Boards](docs/assets/pcbway_boards.jpg)
+
+PCBWay provides an [excellent platform](https://www.pcbway.com/orderonline.aspx) for ordering and customizing your PCB designs. The platform provides easy-to-follow and easy-to-use PCB specifications that meets my needs such as setting the board quantity, the number of layers, the PCB thickness, material type, and much more! 
+
+![PCBWay Online Platform](docs/assets/pcbway_online_platform.png)
+
+Furthermore, support is always available either through the platform or PCBWay will reach out to you directly if they require further specification or if they observe potential risks from their thorough review of your design.
+
+Using PCBWay's online platform, I was able to import all my gerber files I designed using EasyEDA and successfully ordered the boards and arrived upon my location without any issues or concerns. This is a platform I would highly suggest for designers to use!
 
 # Changelog
 
@@ -16,6 +24,10 @@ This repository contains both software and electrical components for building a 
 * Jan 31, 2026 [v1.5]: [Prototype 1.5](https://youtu.be/-AvNgkW_3SQ?si=GbaD0aLfVKiBPiV2) [Fail] - Drone does not lift, keeps resetting, joystick movements does not match flight pattern
 * Mar 28, 2026 [v2.0]: [Prototype 2.0](https://youtu.be/SzuUDoo7Tts) [Fail] - Converted drone to a PCB, but still does not lift, one motor draws most of the power. Power to the components is not well regulated.
 * Apr 27, 2026 [v2.1]: [Prototype 2.1](https://youtu.be/SVGbemywxcY) [Pass] - PCB adjustments to reduce EMF effects and better weight distributions; software adjustments for correct motor mapping.
+
+[EasyEDA Project](https://oshwlab.com/john.santos/multiwii-arduino-drone-project)
+
+![Prototype Two](docs/assets/prototype_2.1.jpg)
 
 # Schematics and Diagrams
 
