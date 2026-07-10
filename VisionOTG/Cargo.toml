@@ -1,0 +1,16 @@
+[package]
+name = "VisionOTG"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0"
+gstreamer = "0.25.2"
+gstreamer-video = "0.25.2"
+gstreamer-app = "0.25.2"
+futures-util = "0.3.32"
+tokio = { version = "1", features = ["full"] }
+cairo-rs = "0.22.0"
+ndarray = "0.17.2"
+onnxruntime = "0.0.14"
+image = "0.25.10"
