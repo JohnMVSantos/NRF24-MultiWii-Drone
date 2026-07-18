@@ -2,15 +2,35 @@
 name = "VisionOTG"
 version = "0.1.0"
 edition = "2024"
+authors = ["John Santos johnmarisantos@protonmail.com"]
+description = "FPV Camera with AI inference"
+license = "CC-BY-4.0"
+repository = "https://github.com/JohnMVSantos/NRF24-MultiWii-Drone"
+homepage = "https://github.com/JohnMVSantos/NRF24-MultiWii-Drone"
+readme = "../README.md"
+keywords = ["fpv", "camera", "drone", "ai", "yolo", "inference"]
+categories = ["computer-vision"]
+
+[[bin]]
+name = "votg"
+path = "src/votg.rs"
 
 [dependencies]
-anyhow = "1.0"
 gstreamer = "0.25.2"
 gstreamer-video = "0.25.2"
 gstreamer-app = "0.25.2"
 futures-util = "0.3.32"
 tokio = { version = "1", features = ["full"] }
 cairo-rs = "0.22.0"
-ndarray = "0.17.2"
 onnxruntime = "0.0.14"
-image = "0.25.10"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true
+debug = false
+
+[profile.profiling]
+inherits = "release"
+strip = false
+debug = true
