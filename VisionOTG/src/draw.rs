@@ -1,5 +1,5 @@
 use cairo::Context;
-use onnxruntime::ndarray::Axis;
+use ndarray::Axis;
 
 use crate::model::SharedDetections;
 

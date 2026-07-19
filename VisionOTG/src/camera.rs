@@ -49,7 +49,7 @@ pub fn create_pipeline() -> Result<(gstreamer::Pipeline, gstreamer::Element), Bo
 }
 
 // Spawn a thread to handle appsink samples
-pub fn appsink_handler(pipeline: &gstreamer::Pipeline, frame_tx: mpsc::SyncSender<Frame>) -> Result<(), Box<dyn Error>> {
+pub fn appsink_handler(pipeline: &gstreamer::Pipeline, frame_tx: mpsc::SyncSender<Frame>) {
     // Use for AI detections: Extract the appsink elements by its string name
     let appsink = pipeline
         .by_name("ai_sink")
@@ -58,7 +58,8 @@ pub fn appsink_handler(pipeline: &gstreamer::Pipeline, frame_tx: mpsc::SyncSende
         .expect("Failed to cast pipeline to AppSink");
 
     // Spawn a background thread to safely block and pull samples
-    std::thread::spawn(move || {
+    let camera_thread = std::thread::Builder::new().name("camera_thread".into());
+    camera_thread.spawn(move || {
         loop {
             // pull_sample() blocks until a sample is ready or EOS occurs
             match appsink.pull_sample() {
@@ -90,8 +91,7 @@ pub fn appsink_handler(pipeline: &gstreamer::Pipeline, frame_tx: mpsc::SyncSende
                 }
             }
         }
-    });
-    Ok(())
+    }).expect("Failed to spawn camera thread");
 }
 
 // Shutdown the pipeline on exit

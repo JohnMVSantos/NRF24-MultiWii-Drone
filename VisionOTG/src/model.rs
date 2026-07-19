@@ -1,11 +1,11 @@
 use std::error::Error;
 use std::sync::{Arc, Mutex, mpsc};
-
-use onnxruntime::{
-    environment::Environment, ndarray::{Array1, Array3, Array4}, 
-    tensor::OrtOwnedTensor, 
-    GraphOptimizationLevel,
-    LoggingLevel,
+use serde_json;
+use ndarray::{Array, Array1, Array3};
+use ort::{
+	inputs,
+	session::{builder::GraphOptimizationLevel, Session},
+	value::TensorRef
 };
 
 use crate::camera::Frame;
@@ -15,51 +15,58 @@ pub type SharedDetections = Arc<Mutex<Array3<f32>>>; // 3D array containing mode
 const NORM: f32 = 1.0 / 255.0;
 
 
-pub fn initialize_model<'a>(environment: &'a Environment) -> Result<onnxruntime::session::Session<'a>, Box<dyn Error>> {
-    let session = environment
-        .new_session_builder()?
-        .with_optimization_level(GraphOptimizationLevel::Basic)?
-        .with_number_threads(1)?
-        .with_model_from_file("yolov8n.onnx")?;
+pub fn initialize_model<'a>(model_path: &str) -> Result<Session, Box<dyn Error>> {
+    let session = Session::builder()?
+        .with_optimization_level(GraphOptimizationLevel::Level3)?
+        .with_intra_threads(4)?
+        .commit_from_file(model_path)?;
     Ok(session)
 }
 
 // Spawn a thread for model inference
-pub fn inference_handler(frame_rx: mpsc::Receiver<Frame>, detections: SharedDetections) -> Result<(), Box<dyn Error>> {
-    let environment = Environment::builder()
-        .with_name("test")
-        .with_log_level(LoggingLevel::Info)
-        .build()?;
-    
-    std::thread::spawn(move || {
-        let mut session = initialize_model(&environment).expect("Failed to initialize YOLOv8 ONNX model");
+pub fn inference_handler(frame_rx: mpsc::Receiver<Frame>, detections: SharedDetections) {
+    let model_thread = std::thread::Builder::new().name("model_thread".into());
+    model_thread.spawn(move || {
+        let mut session = initialize_model("yolov8n.onnx").expect("Failed to initialize YOLOv8 ONNX model");
 
-        let input0_shape: Vec<usize> = session.inputs[0].dimensions().map(|d| d.expect("Failed to get model input dimension")).collect();
-        let output0_shape: Vec<usize> = session.outputs[0]
-            .dimensions()
-            .map(|d| d.expect("Failed to get model output dimension"))
-            .collect();
+        let (input0_shape, channels) = {
+            let meta = session
+                .metadata()
+                .expect("Failed to extract model metadata");
+
+            let input0_shape: Vec<i32> = serde_json::from_str(
+                &meta.custom("imgsz")
+                    .expect("Model metadata is missing required 'imgsz' entry")
+            )
+            .expect("Failed to parse imgsz metadata as JSON");
+
+            let channels: i32 = meta
+                .custom("channels")
+                .expect("Model metadata is missing required 'channels' entry")
+                .parse()
+                .expect("Model metadata 'channels' must be a valid integer");
+
+            (input0_shape, channels)
+        };
+
+        let height = input0_shape[0];
+        let width = input0_shape[1];
 
         // Check model input/output compatibility
         assert_eq!(
-            input0_shape,
-            vec![1, 3, 640, 640],
+            [1, channels, height, width],
+            [1, 3, 640, 640],
             "Unexpected model input shape. Expected [1, 3, 640, 640], got {:?}",
             input0_shape
         );
 
-        assert_eq!(
-            output0_shape,
-            vec![1, 300, 6],
-            "Unexpected model output shape. Expected [1, 300, 6], got {:?}",
-            output0_shape
-        );
-
         while let Ok(frame) = frame_rx.recv() {
             // YOLOv8n input takes CHW format.
-            let mut data = Array4::<f32>::zeros(
-                (input0_shape[0], input0_shape[1], 
-                    input0_shape[2], input0_shape[3]));
+            let mut data = Array::zeros((1usize,
+                channels as usize,
+                height as usize,
+                width as usize
+            ));
             let hw = frame.width * frame.height;
             let out = data.as_slice_mut().expect("Failed to get mutable slice");
             // Perform unsigned normalization
@@ -68,16 +75,17 @@ pub fn inference_handler(frame_rx: mpsc::Receiver<Frame>, detections: SharedDete
                 out[hw + i] = rgb[1] as f32 * NORM;
                 out[2 * hw + i] = rgb[2] as f32 * NORM;
             }
-            let input_tensor_values = vec![data];
+            let input_tensor = TensorRef::from_array_view(&data)
+                .expect("Failed to convert input ndarray into ONNX TensorRef");
+            let outputs = session
+                .run(inputs!["images" => input_tensor])
+                .expect("ONNX model inference execution failed");
 
-            // Run model inference
-            let outputs: Vec<OrtOwnedTensor<f32, _>> = session
-                .run(input_tensor_values)
-                .expect("Failed to run inference session");
-
-            // Place outputs to the shared detections placeholder.
-            let output = &outputs[0];
-            let mut out = output.view().to_owned();
+            let mut out = outputs["output0"]
+                .try_extract_array::<f32>()
+                .expect("Failed to read model output 'output0' as an f32 ndarray")
+                .index_axis(ndarray::Axis(0), 0)
+                .to_owned();
             
             // Normalize detections to [0, 1] for overlay drawing.
             let scale = Array1::from(vec![
@@ -94,6 +102,5 @@ pub fn inference_handler(frame_rx: mpsc::Receiver<Frame>, detections: SharedDete
             shared.assign(&out);
             drop(shared);
         }
-    });
-    Ok(())
+    }).expect("Failed to spawn model inference thread");
 }

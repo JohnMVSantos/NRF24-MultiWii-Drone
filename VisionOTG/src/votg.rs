@@ -7,7 +7,7 @@ use std::error::Error;
 use tokio::signal;
 use futures_util::stream::StreamExt;
 use gstreamer::prelude::*;
-use onnxruntime::ndarray::Array3;
+use ndarray::Array3;
 
 
 #[tokio::main]
@@ -32,8 +32,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let (frame_tx, frame_rx) = mpsc::sync_channel::<camera::Frame>(2);
 
-    model::inference_handler(frame_rx, detections.clone())?;
-    camera::appsink_handler(&pipeline, frame_tx)?;
+    model::inference_handler(frame_rx, detections.clone());
+    camera::appsink_handler(&pipeline, frame_tx);
 
     // Start input pipeline
     pipeline.set_state(gstreamer::State::Playing)?;
