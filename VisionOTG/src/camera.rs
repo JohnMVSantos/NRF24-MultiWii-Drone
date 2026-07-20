@@ -3,7 +3,7 @@ use std::sync::mpsc;
 use gstreamer::prelude::*;
 
 // TODO: Should be made as part of command line arguments
-const WEBCAM: &str = "0";
+const WEBCAM: &str = "8";
 
 pub struct Frame {
     pub width: usize,
@@ -20,15 +20,15 @@ pub fn create_pipeline() -> Result<(gstreamer::Pipeline, gstreamer::Element), Bo
         #[cfg(target_os = "linux")]
         {("v4l2src", format!("device=/dev/video{}", WEBCAM.to_string()))}
         #[cfg(target_os = "macos")]
-        {("avfvideosrc", WEBCAM.to_string())}
+        {("avfvideosrc", format!("device-index={}", WEBCAM.to_string()))}
         #[cfg(target_os = "windows")]
-        {("mfvideosrc", WEBCAM.to_string())}
+        {("mfvideosrc",  format!("device-index={}", WEBCAM.to_string()))}
         #[cfg(not(any(target_os = "linux", target_os = "macos", target_os = "windows")))]
-        {("autovideosrc", WEBCAM.to_string())}
+        {("autovideosrc",  format!("device-index={}", WEBCAM.to_string()))}
     };
 
     let pipeline_str = format!(
-        "{} device-index={} \
+        "{} {} \
         ! videoconvert \
         ! tee name=t \
            t. ! queue ! cairooverlay name=overlay ! videoconvert ! autovideosink \

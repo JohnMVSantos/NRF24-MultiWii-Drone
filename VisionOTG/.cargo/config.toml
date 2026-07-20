@@ -1,14 +1,15 @@
 [build]
-# Disable pkg-config for GStreamer and related libraries to use alternative methods
+
+[target.x86_64-pc-windows-msvc]
 rustflags = [
     "-C", "link-arg=/SUBSYSTEM:CONSOLE",
 ]
 
 [env]
-GSTREAMER_1_0_NO_PKG_CONFIG = "true"
-GSTREAMER_BASE_1_0_NO_PKG_CONFIG = "true"
-GSTREAMER_VIDEO_1_0_NO_PKG_CONFIG = "true"
-GSTREAMER_APP_1_0_NO_PKG_CONFIG = "true"
-GLIB_2_0_NO_PKG_CONFIG = "true"
-GOBJECT_2_0_NO_PKG_CONFIG = "true"
-GIO_2_0_NO_PKG_CONFIG = "true"
+#GSTREAMER_1_0_NO_PKG_CONFIG = "true"
+#GSTREAMER_BASE_1_0_NO_PKG_CONFIG = "true"
+#GSTREAMER_VIDEO_1_0_NO_PKG_CONFIG = "true"
+#GSTREAMER_APP_1_0_NO_PKG_CONFIG = "true"
+#GLIB_2_0_NO_PKG_CONFIG = "true"
+#GOBJECT_2_0_NO_PKG_CONFIG = "true"
+#GIO_2_0_NO_PKG_CONFIG = "true"
