@@ -2,9 +2,6 @@ use std::error::Error;
 use std::sync::mpsc;
 use gstreamer::prelude::*;
 
-// TODO: Should be made as part of command line arguments
-const WEBCAM: &str = "8";
-
 pub struct Frame {
     pub width: usize,
     pub height: usize,
@@ -14,20 +11,20 @@ pub struct Frame {
 // -----------------------------------------------------
 // PIPELINE: camera -> videoconvert -> tee -> overlay + AI
 // -----------------------------------------------------
-pub fn create_pipeline() -> Result<(gstreamer::Pipeline, gstreamer::Element), Box<dyn Error>> {
+pub fn create_pipeline(camera: &str) -> Result<(gstreamer::Pipeline, gstreamer::Element), Box<dyn Error>> {
     // Choose camera source based on OS
     let (camera_src, camera_index) = {
         #[cfg(target_os = "linux")]
-        {("v4l2src", format!("device=/dev/video{}", WEBCAM.to_string()))}
+        {("v4l2src", format!("device={}", camera))}
         #[cfg(target_os = "macos")]
-        {("avfvideosrc", format!("device-index={}", WEBCAM.to_string()))}
+        {("avfvideosrc", format!("device-index={}", camera))}
         #[cfg(target_os = "windows")]
-        {("mfvideosrc",  format!("device-index={}", WEBCAM.to_string()))}
+        {("mfvideosrc",  format!("device-index={}", camera))}
         #[cfg(not(any(target_os = "linux", target_os = "macos", target_os = "windows")))]
-        {("autovideosrc",  format!("device-index={}", WEBCAM.to_string()))}
+        {("autovideosrc",  format!("device-index={}", camera))}
     };
 
-    let pipeline_str = format!(
+    let pipeline_str: String = format!(
         "{} {} \
         ! videoconvert \
         ! tee name=t \

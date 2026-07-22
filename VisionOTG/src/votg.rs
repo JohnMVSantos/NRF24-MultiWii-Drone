@@ -4,14 +4,43 @@ mod draw;
 
 use std::sync::{Arc, Mutex, mpsc};
 use std::error::Error;
+use clap::Parser;
 use tokio::signal;
 use futures_util::stream::StreamExt;
 use gstreamer::prelude::*;
 use ndarray::Array3;
 
+/// Simple program to greet a person
+#[derive(Parser, Debug)]
+#[command(
+    version = "3.0", 
+    about = "VisionOTG", 
+    long_about = "FPV Camera with AI inference")]
+struct Args {
+    /// Pass either the camera index or v4l2src cameras
+    #[arg(short, long,
+          help="Camera index or v4l2src camera to run", 
+          default_value = "/dev/video0")]
+    camera: String,
+
+    /// The path to the YOLOv8 model
+    #[arg(short, long, 
+          help="The path to the YOLOv8 model", 
+          default_value="yolov8n.onnx")]
+    model: String,
+
+    /// Input normalization
+    #[arg(short, long, 
+          help="Specify the model input normalization", 
+          value_enum, 
+          default_value_t = model::Normalization::Unsigned)]
+    norm: model::Normalization,
+}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    let args = Args::parse();
+
     // Initialize GStreamer
     gstreamer::init()?;
 
@@ -19,7 +48,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let detections: model::SharedDetections = Arc::new(Mutex::new(Array3::<f32>::zeros((1, 300, 6)))); 
 
     // Define GStreamer pipeline: capture -> process -> overlay -> display
-    let (pipeline, overlay) = camera::create_pipeline()?;
+    let (pipeline, overlay) = camera::create_pipeline(&args.camera)?;
 
     // Clone shared state into overlay callback
     let overlay_detections = detections.clone();
@@ -32,11 +61,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let (frame_tx, frame_rx) = mpsc::sync_channel::<camera::Frame>(2);
 
-    model::inference_handler(frame_rx, detections.clone());
+    model::inference_handler(args.model, args.norm, frame_rx, detections.clone());
     camera::appsink_handler(&pipeline, frame_tx);
 
     // Start input pipeline
-    pipeline.set_state(gstreamer::State::Playing)?;
+    match pipeline.set_state(gstreamer::State::Playing) {
+        Ok(_) => { }
+        Err(err) => {
+            panic!("Failed to start GStreamer pipeline. Check if the camera '{}' exists: {}", 
+                args.camera, 
+                err
+            );
+        }
+    }
 
     // -------------------------
     // Main loop (bus)
