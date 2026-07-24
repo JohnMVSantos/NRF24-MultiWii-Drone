@@ -70,6 +70,7 @@ if [ "$DO_SETUP" = true ]; then
   pip install cmake
 
   # Build ONNX Runtime package
+  rm -rf ~/.cache/ort.pyke.io
   ./build.sh \
     --config Release \
     --build_shared_lib \
