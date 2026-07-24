@@ -1,38 +1,45 @@
 mod camera;
-mod model;
 mod draw;
+mod model;
 
-use std::sync::{Arc, Mutex, mpsc};
-use std::error::Error;
 use clap::Parser;
-use tokio::signal;
 use futures_util::stream::StreamExt;
 use gstreamer::prelude::*;
 use ndarray::Array3;
+use std::error::Error;
+use std::sync::{Arc, Mutex, mpsc};
+use tokio::signal;
 
 /// Simple program to greet a person
 #[derive(Parser, Debug)]
 #[command(
-    version = "3.0", 
-    about = "VisionOTG", 
-    long_about = "FPV Camera with AI inference")]
+    version = "3.0",
+    about = "VisionOTG",
+    long_about = "FPV Camera with AI inference"
+)]
 struct Args {
     /// Pass either the camera index or v4l2src cameras
-    #[arg(short, long,
-          help="Camera index or v4l2src camera to run", 
-          default_value = "/dev/video0")]
+    #[arg(
+        short,
+        long,
+        help = "Camera index or v4l2src camera to run",
+        default_value = "/dev/video0"
+    )]
     camera: String,
 
     /// The path to the YOLOv8 model
-    #[arg(short, long, 
-          help="The path to the YOLOv8 model", 
-          default_value="yolov8n.onnx")]
+    #[arg(
+        short,
+        long,
+        help = "The path to the YOLOv8 model",
+        default_value = "yolov8n.onnx"
+    )]
     model: String,
 
     /// Input normalization
-    #[arg(short, long, 
+    #[arg(short, long,
           help="Specify the model input normalization", 
-          value_enum, 
+          value_enum,
           default_value_t = model::Normalization::Unsigned)]
     norm: model::Normalization,
 }
@@ -45,7 +52,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     gstreamer::init()?;
 
     // Initialize detections placeholder
-    let detections: model::SharedDetections = Arc::new(Mutex::new(Array3::<f32>::zeros((1, 300, 6)))); 
+    let detections: model::SharedDetections =
+        Arc::new(Mutex::new(Array3::<f32>::zeros((1, 300, 6))));
 
     // Define GStreamer pipeline: capture -> process -> overlay -> display
     let (pipeline, overlay) = camera::create_pipeline(&args.camera)?;
@@ -66,11 +74,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Start input pipeline
     match pipeline.set_state(gstreamer::State::Playing) {
-        Ok(_) => { }
+        Ok(_) => {}
         Err(err) => {
-            panic!("Failed to start GStreamer pipeline. Check if the camera '{}' exists: {}", 
-                args.camera, 
-                err
+            panic!(
+                "Failed to start GStreamer pipeline. Check if the camera '{}' exists: {}",
+                args.camera, err
             );
         }
     }
@@ -78,7 +86,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // -------------------------
     // Main loop (bus)
     // -------------------------
-    let bus = pipeline.bus().expect("Pipeline was initialized without bus");
+    let bus = pipeline
+        .bus()
+        .expect("Pipeline was initialized without bus");
     let mut bus_stream = bus.stream();
 
     tokio::select! {

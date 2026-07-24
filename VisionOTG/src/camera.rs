@@ -1,6 +1,6 @@
+use gstreamer::prelude::*;
 use std::error::Error;
 use std::sync::mpsc;
-use gstreamer::prelude::*;
 
 pub struct Frame {
     pub width: usize,
@@ -11,17 +11,27 @@ pub struct Frame {
 // -----------------------------------------------------
 // PIPELINE: camera -> videoconvert -> tee -> overlay + AI
 // -----------------------------------------------------
-pub fn create_pipeline(camera: &str) -> Result<(gstreamer::Pipeline, gstreamer::Element), Box<dyn Error>> {
+pub fn create_pipeline(
+    camera: &str,
+) -> Result<(gstreamer::Pipeline, gstreamer::Element), Box<dyn Error>> {
     // Choose camera source based on OS
     let (camera_src, camera_index) = {
         #[cfg(target_os = "linux")]
-        {("v4l2src", format!("device={}", camera))}
+        {
+            ("v4l2src", format!("device={}", camera))
+        }
         #[cfg(target_os = "macos")]
-        {("avfvideosrc", format!("device-index={}", camera))}
+        {
+            ("avfvideosrc", format!("device-index={}", camera))
+        }
         #[cfg(target_os = "windows")]
-        {("mfvideosrc",  format!("device-index={}", camera))}
+        {
+            ("mfvideosrc", format!("device-index={}", camera))
+        }
         #[cfg(not(any(target_os = "linux", target_os = "macos", target_os = "windows")))]
-        {("autovideosrc",  format!("device-index={}", camera))}
+        {
+            ("autovideosrc", format!("device-index={}", camera))
+        }
     };
 
     let pipeline_str: String = format!(
@@ -56,42 +66,48 @@ pub fn appsink_handler(pipeline: &gstreamer::Pipeline, frame_tx: mpsc::SyncSende
 
     // Spawn a background thread to safely block and pull samples
     let camera_thread = std::thread::Builder::new().name("camera_thread".into());
-    camera_thread.spawn(move || {
-        loop {
-            // pull_sample() blocks until a sample is ready or EOS occurs
-            match appsink.pull_sample() {
-                Ok(sample) => {
-                    // Get video metadata
-                    let caps = sample.caps().expect("Failed to get sample caps from the appsink");
-                    let info = gstreamer_video::VideoInfo::from_caps(caps)
-                        .expect("Failed to parse VideoInfo");
-                    let width = info.width() as usize;
-                    let height = info.height() as usize;
+    camera_thread
+        .spawn(move || {
+            loop {
+                // pull_sample() blocks until a sample is ready or EOS occurs
+                match appsink.pull_sample() {
+                    Ok(sample) => {
+                        // Get video metadata
+                        let caps = sample
+                            .caps()
+                            .expect("Failed to get sample caps from the appsink");
+                        let info = gstreamer_video::VideoInfo::from_caps(caps)
+                            .expect("Failed to parse VideoInfo");
+                        let width = info.width() as usize;
+                        let height = info.height() as usize;
 
-                    // Extract the buffer payload from the pulled sample
-                    if let Some(buffer) = sample.buffer() {
-                        // Map the buffer memory for reading
-                        if let Ok(map) = buffer.map_readable() {
-                            let frame = Frame {
-                                width,
-                                height,
-                                pixels: map.as_slice().to_vec(),
-                            };
-                            let _ = frame_tx.try_send(frame);
+                        // Extract the buffer payload from the pulled sample
+                        if let Some(buffer) = sample.buffer() {
+                            // Map the buffer memory for reading
+                            if let Ok(map) = buffer.map_readable() {
+                                let frame = Frame {
+                                    width,
+                                    height,
+                                    pixels: map.as_slice().to_vec(),
+                                };
+                                let _ = frame_tx.try_send(frame);
+                            }
                         }
                     }
-                }
-                Err(_eos) => {
-                    println!("Error occurred: {}", _eos);
-                    println!("Reached End of Stream (EOS) or appsink stopped.");
-                    break;
+                    Err(_eos) => {
+                        println!("Error occurred: {}", _eos);
+                        println!("Reached End of Stream (EOS) or appsink stopped.");
+                        break;
+                    }
                 }
             }
-        }
-    }).expect("Failed to spawn camera thread");
+        })
+        .expect("Failed to spawn camera thread");
 }
 
 // Shutdown the pipeline on exit
 pub fn cleanup(pipeline: &gstreamer::Pipeline) {
-    pipeline.set_state(gstreamer::State::Null).expect("Failed to set pipeline state to Null");
+    pipeline
+        .set_state(gstreamer::State::Null)
+        .expect("Failed to set pipeline state to Null");
 }
