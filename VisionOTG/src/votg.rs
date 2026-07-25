@@ -7,7 +7,11 @@ use futures_util::stream::StreamExt;
 use gstreamer::prelude::*;
 use ndarray::Array3;
 use std::error::Error;
-use std::sync::{Arc, Mutex, mpsc};
+use std::sync::{
+    Arc, Mutex,
+    atomic::{AtomicBool, Ordering},
+    mpsc,
+};
 use tokio::signal;
 
 /// Simple program to greet a person
@@ -67,10 +71,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
         None
     });
 
-    let (frame_tx, frame_rx) = mpsc::sync_channel::<camera::Frame>(2);
+    let shutdown = Arc::new(AtomicBool::new(false));
+    let (frame_tx, frame_rx) = mpsc::sync_channel::<camera::Frame>(1);
 
-    model::inference_handler(args.model, args.norm, frame_rx, detections.clone());
-    camera::appsink_handler(&pipeline, frame_tx);
+    model::inference_handler(
+        args.model,
+        args.norm,
+        frame_rx,
+        detections.clone(),
+        shutdown.clone(),
+    );
+    camera::appsink_handler(&pipeline, frame_tx, shutdown.clone());
 
     // Start input pipeline
     match pipeline.set_state(gstreamer::State::Playing) {
@@ -94,14 +105,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
     tokio::select! {
         _ = signal::ctrl_c() => {
             println!("Ctrl+C received");
+            shutdown.store(true, Ordering::Relaxed);
             let _ = pipeline.send_event(gstreamer::event::Eos::new());
         }
 
         _ = async {
             while let Some(msg) = bus_stream.next().await {
                 match msg.view() {
-                    gstreamer::MessageView::Eos(_) => break,
+                    gstreamer::MessageView::Eos(_) => {
+                        shutdown.store(true, Ordering::Relaxed);
+                        break;
+                    }
                     gstreamer::MessageView::Error(err) => {
+                        shutdown.store(true, Ordering::Relaxed);
                         eprintln!("Error: {:?}", err);
                         break;
                     }

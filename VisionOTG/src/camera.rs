@@ -1,6 +1,10 @@
 use gstreamer::prelude::*;
 use std::error::Error;
-use std::sync::mpsc;
+use std::sync::{
+    Arc,
+    atomic::{AtomicBool, Ordering},
+    mpsc,
+};
 
 pub struct Frame {
     pub width: usize,
@@ -56,7 +60,11 @@ pub fn create_pipeline(
 }
 
 // Spawn a thread to handle appsink samples
-pub fn appsink_handler(pipeline: &gstreamer::Pipeline, frame_tx: mpsc::SyncSender<Frame>) {
+pub fn appsink_handler(
+    pipeline: &gstreamer::Pipeline,
+    frame_tx: mpsc::SyncSender<Frame>,
+    shutdown: Arc<AtomicBool>,
+) {
     // Use for AI detections: Extract the appsink elements by its string name
     let appsink = pipeline
         .by_name("ai_sink")
@@ -68,7 +76,7 @@ pub fn appsink_handler(pipeline: &gstreamer::Pipeline, frame_tx: mpsc::SyncSende
     let camera_thread = std::thread::Builder::new().name("camera_thread".into());
     camera_thread
         .spawn(move || {
-            loop {
+            while !shutdown.load(Ordering::Relaxed) {
                 // pull_sample() blocks until a sample is ready or EOS occurs
                 match appsink.pull_sample() {
                     Ok(sample) => {
@@ -94,13 +102,13 @@ pub fn appsink_handler(pipeline: &gstreamer::Pipeline, frame_tx: mpsc::SyncSende
                             }
                         }
                     }
-                    Err(_eos) => {
-                        println!("Error occurred: {}", _eos);
-                        println!("Reached End of Stream (EOS) or appsink stopped.");
+                    Err(err) => {
+                        println!("Reached End of Stream (EOS) or appsink stopped: {}", err);
                         break;
                     }
                 }
             }
+            println!("camera thread exiting");
         })
         .expect("Failed to spawn camera thread");
 }
