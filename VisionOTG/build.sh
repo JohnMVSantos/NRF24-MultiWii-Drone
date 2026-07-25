@@ -58,7 +58,9 @@ if [ "$DO_SETUP" = true ]; then
     python3-pip \
     python3-venv \
     python3-full \
-    git
+    git \
+    libcurl4-openssl-dev \
+    libssl-dev
 
   # Clone ONNX Runtime repository
   git clone --recursive https://github.com/microsoft/onnxruntime.git
