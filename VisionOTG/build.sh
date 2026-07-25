@@ -90,11 +90,13 @@ if [ "$DO_SETUP" = true ]; then
 
   # Build ONNX Runtime package
   rm -rf ~/.cache/ort.pyke.io
+  export CXXFLAGS="${CXXFLAGS:-} -Wno-error=calloc-transposed-args"
   ./build.sh \
     --config Release \
     --build_shared_lib \
     --parallel 4 \
-    --skip_tests
+    --skip_tests \
+    --cmake_extra_defines onnxruntime_USE_TELEMETRY=OFF
 
   # Alternative command if above fails
   # /home/pi/cmake-env/bin/cmake \
