@@ -91,5 +91,4 @@ export ORT_STRATEGY=system
 export ORT_LIB_LOCATION="$SCRIPT_DIR/onnxruntime/build/Linux/Release"
 export LD_LIBRARY_PATH="$SCRIPT_DIR/onnxruntime/build/Linux/Release:$LD_LIBRARY_PATH"
 
-cd "$SCRIPT_DIR/VisionOTG"
 cargo build --release

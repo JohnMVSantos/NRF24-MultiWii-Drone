@@ -1,6 +1,4 @@
-[build]
+# VisionOTG workspace Cargo config
 
 [target.x86_64-pc-windows-msvc]
-rustflags = [
-    "-C", "link-arg=/SUBSYSTEM:CONSOLE",
-]
+rustflags = ["-C", "link-arg=/SUBSYSTEM:CONSOLE"]
