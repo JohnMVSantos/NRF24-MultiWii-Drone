@@ -78,7 +78,7 @@ if [ "$DO_SETUP" = true ]; then
       echo "Found existing onnxruntime directory but it is not a git checkout. Remove it and rerun --setup."
       exit 1
     fi
-    git clone --recursive https://github.com/microsoft/onnxruntime.git
+    git clone --recursive --branch v1.28.0 https://github.com/microsoft/onnxruntime.git
     cd "$SCRIPT_DIR/onnxruntime"
   fi
 
@@ -92,18 +92,17 @@ if [ "$DO_SETUP" = true ]; then
   rm -rf ~/.cache/ort.pyke.io
   export CXXFLAGS="${CXXFLAGS:-} -Wno-error=calloc-transposed-args"
 
-  # Old method for building onnxruntime
-  # ./build.sh \
-  #   --config Release \
-  #   --build_shared_lib \
-  #   --parallel 4 \
-  #   --skip_tests \
-  #   --cmake_extra_defines onnxruntime_USE_TELEMETRY=OFF
+  ./build.sh \
+    --config Release \
+    --build_shared_lib \
+    --parallel 4 \
+    --skip_tests \
+    --cmake_extra_defines onnxruntime_USE_TELEMETRY=OFF
 
-  "$PWD/cmake-env/bin/cmake" \
-    --build build/Linux/Release \
-    --target onnxruntime \
-    -j2
+  # "$PWD/cmake-env/bin/cmake" \
+  #   --build build/Linux/Release \
+  #   --target onnxruntime \
+  #   -j2
 
   cd "$SCRIPT_DIR"
 fi
