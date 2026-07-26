@@ -3,7 +3,6 @@ mod draw;
 mod model;
 
 use clap::Parser;
-use futures_util::stream::StreamExt;
 use gstreamer::prelude::*;
 use ndarray::Array3;
 use std::error::Error;
@@ -12,7 +11,6 @@ use std::sync::{
     atomic::{AtomicBool, Ordering},
     mpsc,
 };
-use tokio::signal;
 
 /// Simple program to greet a person
 #[derive(Parser, Debug)]
@@ -48,8 +46,7 @@ struct Args {
     norm: model::Normalization,
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<(), Box<dyn Error>> {
     let args = Args::parse();
 
     // Initialize GStreamer
@@ -73,6 +70,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let shutdown = Arc::new(AtomicBool::new(false));
     let (frame_tx, frame_rx) = mpsc::sync_channel::<camera::Frame>(1);
+
+    {
+        let shutdown = shutdown.clone();
+        ctrlc::set_handler(move || {
+            println!("Ctrl+C received");
+            shutdown.store(true, Ordering::Relaxed);
+        }).expect("Error setting Ctrl-C handler");
+    }
 
     model::inference_handler(
         args.model,
@@ -100,31 +105,24 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let bus = pipeline
         .bus()
         .expect("Pipeline was initialized without bus");
-    let mut bus_stream = bus.stream();
 
-    tokio::select! {
-        _ = signal::ctrl_c() => {
-            println!("Ctrl+C received");
-            shutdown.store(true, Ordering::Relaxed);
-            let _ = pipeline.send_event(gstreamer::event::Eos::new());
+    loop {
+        if shutdown.load(Ordering::Relaxed) {
+            break;
         }
 
-        _ = async {
-            while let Some(msg) = bus_stream.next().await {
-                match msg.view() {
-                    gstreamer::MessageView::Eos(_) => {
-                        shutdown.store(true, Ordering::Relaxed);
-                        break;
-                    }
-                    gstreamer::MessageView::Error(err) => {
-                        shutdown.store(true, Ordering::Relaxed);
-                        eprintln!("Error: {:?}", err);
-                        break;
-                    }
-                    _ => {}
+        if let Some(msg) = bus.timed_pop(gstreamer::ClockTime::from_mseconds(100)) {
+            match msg.view() {
+                gstreamer::MessageView::Error(err) => {
+                    eprintln!("Error: {:?}", err);
+                    shutdown.store(true, Ordering::Relaxed);
                 }
+                gstreamer::MessageView::Eos(_) => {
+                    shutdown.store(true, Ordering::Relaxed);
+                }
+                _ => {}
             }
-        } => {}
+        }
     }
 
     // Cleanup pipeline on exit
