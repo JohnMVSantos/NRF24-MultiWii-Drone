@@ -97,7 +97,9 @@ if [ "$DO_SETUP" = true ]; then
     --build_shared_lib \
     --parallel 4 \
     --skip_tests \
-    --cmake_extra_defines onnxruntime_USE_TELEMETRY=OFF
+    --cmake_extra_defines \
+      onnxruntime_BUILD_UNIT_TESTS=OFF \
+      onnxruntime_USE_TELEMETRY=OFF
 
   # "$PWD/cmake-env/bin/cmake" \
   #   --build build/Linux/Release \
