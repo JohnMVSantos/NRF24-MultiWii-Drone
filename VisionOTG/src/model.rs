@@ -51,9 +51,9 @@ pub fn inference_handler(
     frame_rx: mpsc::Receiver<Frame>,
     detections: SharedDetections,
     shutdown: Arc<AtomicBool>,
-) {
-    let model_thread = std::thread::Builder::new().name("model_thread".into());
-    model_thread
+) -> std::thread::JoinHandle<()> {
+    std::thread::Builder::new()
+        .name("model_thread".into())
         .spawn(move || {
             let mut session =
                 initialize_model(&model_path).expect("Failed to initialize YOLOv8 ONNX model");
@@ -159,5 +159,5 @@ pub fn inference_handler(
             }
             println!("model thread exiting");
         })
-        .expect("Failed to spawn model inference thread");
+        .expect("Failed to spawn model inference thread")
 }

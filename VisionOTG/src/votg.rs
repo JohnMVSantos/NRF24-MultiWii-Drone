@@ -79,14 +79,18 @@ fn main() -> Result<(), Box<dyn Error>> {
         }).expect("Error setting Ctrl-C handler");
     }
 
-    model::inference_handler(
+    let model_thread = model::inference_handler(
         args.model,
         args.norm,
         frame_rx,
         detections.clone(),
         shutdown.clone(),
     );
-    camera::appsink_handler(&pipeline, frame_tx, shutdown.clone());
+    let camera_thread = camera::appsink_handler(
+        &pipeline, 
+        frame_tx, 
+        shutdown.clone()
+    );
 
     // Start input pipeline
     match pipeline.set_state(gstreamer::State::Playing) {
@@ -126,6 +130,19 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     // Cleanup pipeline on exit
+    println!("Stopping GStreamer Pipeline...");
     camera::cleanup(&pipeline);
+
+    // Join threads
+    println!("Joining camera thread");
+    camera_thread.join().expect("Failed to join camera thread");
+
+    println!("Joining model thread");
+    model_thread.join().expect("Failed to join model thread");
+
+    println!("Cleaning up...");
+    drop(pipeline);
+    drop(overlay);
+
     Ok(())
 }

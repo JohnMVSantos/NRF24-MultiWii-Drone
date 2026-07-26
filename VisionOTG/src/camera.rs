@@ -64,7 +64,7 @@ pub fn appsink_handler(
     pipeline: &gstreamer::Pipeline,
     frame_tx: mpsc::SyncSender<Frame>,
     shutdown: Arc<AtomicBool>,
-) {
+) -> std::thread::JoinHandle<()> {
     // Use for AI detections: Extract the appsink elements by its string name
     let appsink = pipeline
         .by_name("ai_sink")
@@ -73,8 +73,8 @@ pub fn appsink_handler(
         .expect("Failed to cast pipeline to AppSink");
 
     // Spawn a background thread to safely block and pull samples
-    let camera_thread = std::thread::Builder::new().name("camera_thread".into());
-    camera_thread
+    std::thread::Builder::new()
+        .name("camera_thread".into())
         .spawn(move || {
             while !shutdown.load(Ordering::Relaxed) {
                 // pull_sample() blocks until a sample is ready or EOS occurs
@@ -98,6 +98,7 @@ pub fn appsink_handler(
                                     height,
                                     pixels: map.as_slice().to_vec(),
                                 };
+                                // NOTE: do not break if `is_err()`.
                                 let _ = frame_tx.try_send(frame);
                             }
                         }
@@ -110,12 +111,14 @@ pub fn appsink_handler(
             }
             println!("camera thread exiting");
         })
-        .expect("Failed to spawn camera thread");
+        .expect("Failed to spawn camera thread")
 }
 
 // Shutdown the pipeline on exit
 pub fn cleanup(pipeline: &gstreamer::Pipeline) {
-    pipeline
+    println!("Setting pipeline to NULL");
+    let result = pipeline
         .set_state(gstreamer::State::Null)
         .expect("Failed to set pipeline state to Null");
+    println!("Pipeline state changed: {:?}", result);
 }
